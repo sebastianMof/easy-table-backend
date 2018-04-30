@@ -1,4 +1,5 @@
 var Sequelize = require( 'sequelize' );
+const Op = Sequelize.Op;
 
 var con = new Sequelize( 'null', 'null', 'null', {
 	dialect: 'sqlite',
@@ -17,17 +18,27 @@ var Mesa = con.define( 'mesa', {
 });
 
 var Reserva = con.define( 'reserva', {
-	rut_usuario: Sequelize.INTEGER,
-	numero_mesa: Sequelize.INTEGER,
+	rut_usuario: { 
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	numero_mesa:{
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
 	fecha_reserva: Sequelize.INTEGER,
 	estado: Sequelize.INTEGER
 
 });
 
 var Usuario = con.define( 'usuario', {
+	rut: {
+		type: Sequelize.INTEGER,
+		allowNull: false,
+		primaryKey: true
+	},
 	nombre: Sequelize.STRING,
 	apellido: Sequelize.STRING,
-	rut: Sequelize.INTEGER,
 	email: Sequelize.STRING,
 	tipo_usuario: Sequelize.STRING
 
@@ -63,7 +74,7 @@ con.sync().then( function () {
 	Reserva.create({
 		rut_usuario: '123457789',
 		numero_mesa: '2',
-		fecha_reserva: '21',
+		fecha_reserva: '25',
 		estado: '0'
 	})
 	Usuario.create({
@@ -73,7 +84,7 @@ con.sync().then( function () {
 		email: 'correo@correo.cl',
 		tipo_usuario: 'Admin'
 	})
-		Usuario.create({
+	Usuario.create({
 		nombre: 'nombre2',
 		apellido: 'apellido2',
 		rut: '1233566789',
@@ -89,7 +100,28 @@ con.sync().then( function () {
 	//Mesa.findById( 1 ).then( function ( mesa ){ 
 	Mesa.findAll().then( function ( mesas ) {
 	console.log("Numbers of records in the mesas table:" + mesas.length);
-
-
 	});
+
+	Reserva.findAll({. //Reservas entre fechas 10,22
+	  where: {
+	    fecha_reserva:{
+			[Op.between]: [10,22]
+		}
+	  }
+	}).then( function ( reservas ) {
+	console.log("Numbers of records in the reservas table:" + reservas.length);
+	});
+
+
+	
 });
+
+
+
+
+
+
+
+
+
+
