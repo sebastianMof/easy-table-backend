@@ -16,7 +16,6 @@ var Mesa = con.define( 'mesa', {
 
 });
 
-
 var Reserva = con.define( 'reserva', {
 	rut_usuario: Sequelize.INTEGER,
 	numero_mesa: Sequelize.INTEGER,
