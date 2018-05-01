@@ -18,16 +18,9 @@ var Mesa = con.define( 'mesa', {
 });
 
 var Reserva = con.define( 'reserva', {
-	rut_usuario: { 
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	numero_mesa:{
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	fecha_reserva: Sequelize.INTEGER,
-	estado: Sequelize.INTEGER
+	fecha_inicio_reserva: Sequelize.DATE,
+	fecha_fin_reserva: Sequelize.DATE,
+	estado: Sequelize.BOOLEAN
 
 });
 
@@ -65,31 +58,26 @@ con.sync().then( function () {
 		capacidad: '10'
 	});
 
-	Reserva.create({
-		rut_usuario: '123456789',
-		numero_mesa: '2',
-		fecha_reserva: '20',
-		estado: '0'
-	})
-	Reserva.create({
-		rut_usuario: '123457789',
-		numero_mesa: '2',
-		fecha_reserva: '25',
-		estado: '0'
-	})
 	Usuario.create({
-		nombre: 'nombre1',
-		apellido: 'apellido1',
-		rut: '1234566789',
+		nombre: 'Bruno',
+		apellido: 'Becerra',
+		rut: '111111111',
 		email: 'correo@correo.cl',
 		tipo_usuario: 'Admin'
 	})
 	Usuario.create({
-		nombre: 'nombre2',
-		apellido: 'apellido2',
-		rut: '1233566789',
-		email: 'correo@correo.cl',
+		nombre: 'Alvaro',
+		apellido: 'Gonzalez',
+		rut: '222222222',
+		email: 'correo@correo.net',
 		tipo_usuario: 'Mesero'
+	})
+	Reserva.create({
+		fecha_inicio_reserva: '2018-05-01 22:21:03.000',
+		fecha_fin_reserva: '2018-05-02 01:21:03.000',
+		estado: 'true',
+		mesaNumero: '1',
+		usuarioRut: '111111111',
 	})
 
 
@@ -97,20 +85,46 @@ con.sync().then( function () {
 });
 
 con.sync().then( function () {
+
+	//Funciones Consulta en MESA -------
 	//Mesa.findById( 1 ).then( function ( mesa ){ 
 	Mesa.findAll().then( function ( mesas ) {
-	console.log("Numbers of records in the mesas table:" + mesas.length);
+	console.log("Numbers of records in the mesa table:" + mesas.length);
 	});
 
-	Reserva.findAll({. //Reservas entre fechas 10,22
+	Mesa.findAll({ //Mesas con capacidad >= 6
+	  where: {
+	    capacidad:{
+			[Op.gte]: 6,
+		}
+	  }
+	}).then( function ( mesas ) {
+	console.log("Numbers of records in the mesa table mayor igual 6:" + mesas.length);
+	});
+
+
+
+	//-----------------------------------
+	////Funciones Consulta en RESERVA -------
+
+
+/*	Reserva.findAll({ //Reservas entre fechas 10,22
 	  where: {
 	    fecha_reserva:{
 			[Op.between]: [10,22]
 		}
 	  }
 	}).then( function ( reservas ) {
-	console.log("Numbers of records in the reservas table:" + reservas.length);
+	console.log("Numbers of records in the reserva table entre 10 y 22:" + reservas.length);
 	});
+*/
+	//-----------------------------------
+	////Funciones Consulta en USUARIO -------
+
+	Usuario.findAll().then( function ( usuarios ) {
+	console.log("Numbers of records in the usuario table:" + usuarios.length);
+	});
+
 
 
 	
