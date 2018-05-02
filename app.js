@@ -33,7 +33,10 @@ var Usuario = con.define( 'usuario', {
 	nombre: Sequelize.STRING,
 	apellido: Sequelize.STRING,
 	email: Sequelize.STRING,
-	tipo_usuario: Sequelize.STRING
+	tipo_usuario: {
+		type: Sequelize.STRING,
+		values: ['Admin', 'Cliente']
+	}
 
 });
 
@@ -72,7 +75,7 @@ con.sync().then( function () {
 		email: 'correo@correo.net',
 		tipo_usuario: 'Cliente'
 	})
-	
+
 	Reserva.create({
 		fecha_inicio_reserva: '2018-05-01 22:21:03.000',
 		fecha_fin_reserva: '2018-05-02 01:21:03.000',
@@ -162,9 +165,12 @@ con.sync().then( function () {
 	    	tipo_usuario: 'Admin'
 		}
 
-	}).then( function ( usuarios ) {
-	console.log("Cantidad de ADMINs:" + usuarios.length);
+	}).then(admins => {
+  		console.log(`Cantidad de ADMINs : ${admins.length} `);
 	});
+
+
+
 
 	//Instancia de todos los usuarios CLIENTE, imprime cant, usuarios
 	Usuario.findAll({ 
