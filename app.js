@@ -93,6 +93,15 @@ con.sync().then( function () {
 	console.log("Cantidad de mesas:" + mesas.length);
 	});
 
+	//Instancia de todas las mesas con numero igual a 2, imprime cant de esto(siempre1).
+	Mesa.findAll({ 
+	  where: {
+	    numero: 2
+	  }
+	}).then( function ( mesas ) {
+	console.log("Mesas con numero igual a 2:" + mesas.length);
+	});
+
 	//Instancia de todas las mesas con capacidad >= 6, imprime cant de estas.
 	Mesa.findAll({ 
 	  where: {
