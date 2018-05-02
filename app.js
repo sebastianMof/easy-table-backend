@@ -70,7 +70,7 @@ con.sync().then( function () {
 		apellido: 'Gonzalez',
 		rut: '222222222',
 		email: 'correo@correo.net',
-		tipo_usuario: 'Mesero'
+		tipo_usuario: 'Cliente'
 	})
 	Reserva.create({
 		fecha_inicio_reserva: '2018-05-01 22:21:03.000',
@@ -87,55 +87,109 @@ con.sync().then( function () {
 con.sync().then( function () {
 
 	//Funciones Consulta en MESA -------
-	//Mesa.findById( 1 ).then( function ( mesa ){ 
+
+	//Instancia de todas las mesas, imprime cantidad de mesas.
 	Mesa.findAll().then( function ( mesas ) {
-	console.log("Numbers of records in the mesa table:" + mesas.length);
+	console.log("Cantidad de mesas:" + mesas.length);
 	});
 
-	Mesa.findAll({ //Mesas con capacidad >= 6
+	//Instancia de todas las mesas con capacidad >= 6, imprime cant de estas.
+	Mesa.findAll({ 
 	  where: {
 	    capacidad:{
 			[Op.gte]: 6,
 		}
 	  }
 	}).then( function ( mesas ) {
-	console.log("Numbers of records in the mesa table mayor igual 6:" + mesas.length);
+	console.log("Mesas con capacidad mayor o igual a 6:" + mesas.length);
 	});
 
-
+	//No es necesario filtrar por numero, ya que es llave primaria
 
 	//-----------------------------------
 	////Funciones Consulta en RESERVA -------
 
-
-/*	Reserva.findAll({ //Reservas entre fechas 10,22
+	//Instancia de reservas entre fechas 10 y 22, imprime la cantidad
+ 	Reserva.findAll({ 
 	  where: {
 	    fecha_reserva:{
 			[Op.between]: [10,22]
 		}
 	  }
 	}).then( function ( reservas ) {
-	console.log("Numbers of records in the reserva table entre 10 y 22:" + reservas.length);
+	console.log("Cantidad de reservas entre 10 y 22:" + reservas.length);
 	});
-*/
+
+	//Instancia de reservas activas, imprime cant. reservas activas
+	Reserva.findAll({ 
+	  where: {
+	    estado: 1
+		}
+	  }
+	}).then( function ( reservas ) {
+	console.log("Reservas Activas:" + reservas.length);
+	});
+
+	//Instancia de reservas inactivas, imprime cant. reservas inactivas
+	Reserva.findAll({ 
+	  where: {
+	    estado: 0
+		}
+	  }
+	}).then( function ( reservas ) {
+	console.log("Reservas Activas:" + reservas.length);
+	});
+
 	//-----------------------------------
 	////Funciones Consulta en USUARIO -------
 
+	//Instancia de todos los usuarios, imprime cant. usuarios
 	Usuario.findAll().then( function ( usuarios ) {
-	console.log("Numbers of records in the usuario table:" + usuarios.length);
+	console.log("Cantidad de usuarios:" + usuarios.length);
 	});
+
+	//Instancia de todos los usuarios ADMIN, imprime cant. ADMINS
+	Usuario.findAll({ 
+	  where: {
+	    tipo_usuario: 'Admin'
+		}
+	  }
+	}).then( function ( usuarios ) {
+	console.log("Cantidad de ADMINs:" + usuarios.length);
+	});
+
+	//Instancia de todos los usuarios CLIENTE, imprime cant, usuarios
+	Usuario.findAll({ 
+	  where: {
+	    tipo_usuario: 'Cliente'
+		}
+	  }
+	}).then( function ( usuarios ) {
+	console.log("Cantidad de Clientes:" + usuarios.length);
+	});
+
+	//Instancia de todos los usuarios CLIENTE, imprime cant, usuarios
+	Usuario.findAll({ 
+	  where: {
+	    tipo_usuario: 'Cliente'
+		}
+	  }
+	}).then( function ( usuarios ) {
+	console.log("Cantidad de Clientes:" + usuarios.length);
+	});
+
+	Usuario.findAll({ 
+	  where: {
+	    tipo_usuario: 'Cliente'
+		}
+	  }
+	}).then( function ( usuarios ) {
+	console.log("Cantidad de Clientes:" + usuarios.length);
+	});
+
+
 
 
 
 	
 });
-
-
-
-
-
-
-
-
-
-
