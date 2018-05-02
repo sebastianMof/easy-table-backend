@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-//POST-CREATE usuario
+//POST-CREATE crea un usuario
 router.post('/', async (req, res, next) => {
     const rut = req.body['rut'];
     const tipo_usuario = req.body['tipo_usuario'];
@@ -46,5 +46,72 @@ router.post('/', async (req, res, next) => {
         });
     }
 });
+
+
+//GET-READ consulta todos los usuarios
+router.get('/', async(req, res, next) => {
+    models.usuario
+        .findAll()
+        .then(users => {
+            if (users) {
+                res.json({
+                    status: 1,
+                    statusCode: 'users/listing',
+                    data: users
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'users/not-found',
+                    description: 'There\'s no user information!'
+                });
+            }
+        }).catch(error => {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'database/error',
+            description: error.toString()
+        });
+    });
+});
+
+//GET-READ consulta usuario por rut
+router.get('/rut', async(req, res, next) => {
+    const rut = req.params.rut;
+    if (rut) {
+        models.usuario.findOne({
+            where: {
+                rut: rut
+            }
+        }).then(usuario => {
+            if (usuario) {
+                res.json({
+                    status: 1,
+                    statusCode: 'user/found',
+                    data: usuario.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'user/not-found',
+                    description: 'The user was not found with the rut'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'user/wrong-rut',
+            description: 'Check the rut!'
+        });
+    }
+});
+
 
 module.exports = router;

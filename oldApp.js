@@ -131,6 +131,12 @@ con.sync().then( function () {
 });
 
 
+/*	   	 password: {  				//atributo contraseña para usuario
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+*/
+
 
 
 

@@ -42,7 +42,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-//GET-READ mesa
+//GET-READ mesa numero
 router.get('/:numero', async (req, res, next) => {
     const numero = req.params.numero;
     if (numero) {
