@@ -42,7 +42,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-//GET-READ mesa numero
+//GET-READ mesa con numero de mesa
 router.get('/:numero', async (req, res, next) => {
     const numero = req.params.numero;
     if (numero) {
@@ -79,6 +79,45 @@ router.get('/:numero', async (req, res, next) => {
         });
     }
 });
+
+
+router.get('/:capacidad', async(req, res, next) => {  // Obetener todas las mesas con X capacidad
+    const capacidad = req.params.capacidad;
+    if (capacidad) {
+        models.mesa.findOne({
+            where: {
+                capacidad: capacidad
+            }
+        }).then(mesas => {
+            if (mesas) {
+                res.json({
+                    status: 1,
+                    statusCode: 'mesa/found',
+                    data: mesas.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'capacidad-mesa/not-found',
+                    description: 'The capacidad-mesa not found '
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'mesa/wrong-capacidad',
+            description: 'Check the capacidad!'
+        });
+    }
+});
+
 
 
 //------
