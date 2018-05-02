@@ -1,0 +1,38 @@
+{
+  "development": {
+    "database": "easyTable",
+    "dialect": "sqlite",
+    "logging": true,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    },
+    "storage": "db.sqlite"
+  },
+  "test": {
+    "database": "easyTable",
+    "dialect": "sqlite",
+    "logging": true,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    },
+    "storage": "db.sqlite"
+  },
+  "production": {
+    "database": "easyTable",
+    "dialect": "sqlite",
+    "logging": true,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    },
+    "storage": "db.sqlite"
+  }
+}

@@ -1,12 +1,14 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
-  var Mesa = sequelize.define('Mesa', {
+
+  const mesa = sequelize.define('mesa', {
     numero: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: false, //Para convertirlo en serial poner en true
         allowNull: false
-     }
+     },
     capacidad: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Mesa.associate = (models) => {
-        Mesa.hasMany(Reserva) //Una mesa puede tener muchas reservas (Mientras se verifique el horario de la reserva)
-
-    return Mesa;
+  mesa.associate = (models) => {
+        mesa.hasMany(models.reserva); //Una mesa puede tener muchas reservas (Mientras se verifique el horario de la reserva)
+  }
+  return mesa;
 };

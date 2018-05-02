@@ -1,31 +1,36 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
-  var User = sequelize.define('Usuario', {
+  const usuario = sequelize.define('usuario', {
+    rut: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true //Único, irrepetible y primary key
+    },
+    tipo_usuario: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      values: ['Admin', 'Cliente']
+    },
     nombre: {
       type: DataTypes.STRING,
-        allowNull: false
-   }
-  apellido: {
+      allowNull: false
+    },
+    apellido: {
       type: DataTypes.STRING,
-        allowNull: false
-   }
-   rut: {
-      type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true, //Único, irrepetible y primary key
-   }
-   email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        isEmail: true
-     }
-   tipo_usuario: {
-        type: DataTypes.STRING,
-        allowNull: false,
-   }
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      isEmail: true
+    }   
+
   });
 
-  Usuario.associate = (models) => {
-        Usuario.hasMany(Reserva) //Una reserva pertenece al usuario, puede tener más de una reserva si es de grado mesero
-  return Usuario;
+  usuario.associate = (models) => {
+    usuario.hasMany(models.reserva); //Una reserva pertenece al usuario, puede tener más de una reserva si es de grado mesero
+  }  
+  return usuario;
+  
 };
