@@ -72,6 +72,7 @@ con.sync().then( function () {
 		email: 'correo@correo.net',
 		tipo_usuario: 'Cliente'
 	})
+	
 	Reserva.create({
 		fecha_inicio_reserva: '2018-05-01 22:21:03.000',
 		fecha_fin_reserva: '2018-05-02 01:21:03.000',
@@ -121,32 +122,30 @@ con.sync().then( function () {
 	//Instancia de reservas entre fechas 10 y 22, imprime la cantidad
  	Reserva.findAll({ 
 	  where: {
-	    fecha_reserva:{
-			[Op.between]: [10,22]
+	    fecha_inicio_reserva:{
+			[Op.between]: ['2018-05-01 22:21:03.000','2018-05-02 01:21:03.000']
 		}
 	  }
 	}).then( function ( reservas ) {
-	console.log("Cantidad de reservas entre 10 y 22:" + reservas.length);
+	console.log("Cantidad de reservas entre DATE1 y DATE2:" + reservas.length);
 	});
 
 	//Instancia de reservas activas, imprime cant. reservas activas
 	Reserva.findAll({ 
-	  where: {
-	    estado: 1
+		where: {
+	    	estado: true
 		}
-	  }
 	}).then( function ( reservas ) {
 	console.log("Reservas Activas:" + reservas.length);
 	});
 
 	//Instancia de reservas inactivas, imprime cant. reservas inactivas
 	Reserva.findAll({ 
-	  where: {
-	    estado: 0
+		where: {
+	    	estado: false
 		}
-	  }
 	}).then( function ( reservas ) {
-	console.log("Reservas Activas:" + reservas.length);
+	console.log("Reservas Inactivas:" + reservas.length);
 	});
 
 	//-----------------------------------
@@ -159,28 +158,22 @@ con.sync().then( function () {
 
 	//Instancia de todos los usuarios ADMIN, imprime cant. ADMINS
 	Usuario.findAll({ 
-	  where: {
-	    tipo_usuario: 'Admin'
+		where: {
+	    	tipo_usuario: 'Admin'
 		}
-	  }
+
 	}).then( function ( usuarios ) {
 	console.log("Cantidad de ADMINs:" + usuarios.length);
 	});
 
 	//Instancia de todos los usuarios CLIENTE, imprime cant, usuarios
 	Usuario.findAll({ 
-	  where: {
-	    tipo_usuario: 'Cliente'
+		where: {
+	    	tipo_usuario: 'Cliente'
 		}
-	  }
+
 	}).then( function ( usuarios ) {
 	console.log("Cantidad de Clientes:" + usuarios.length);
 	});
 
-
-
-
-
-
-	
 });
