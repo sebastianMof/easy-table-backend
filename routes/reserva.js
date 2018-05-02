@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-
+/*
 //CREAR RESERVA CON CAPACIDAD O CON MESA EN ESPECIFICO
 router.post('/', async (req, res, next) => {
     const dia_reserva = req.body['dia']; //Esto recibe la primera fecha
@@ -13,7 +13,7 @@ router.post('/', async (req, res, next) => {
     const capacidad = req.body['capacidad'];
     const mesa = req.body['mesa'];
     const rut = req.body['rut'];
-    const fecha1;
+    const fecha1= ;
 
     if(dia_reserva && mes_reserva && anyo_reserva && hora_reserva && minuto_reserva){
         fecha1 = new Date('anyo_reserva', 'mes_reserva', 'dia_reserva', 'hora_reserva', 'minuto_reserva'); //Se crea formato fecha
@@ -164,7 +164,7 @@ router.post('/', async (req, res, next) => {
     }
 
 });
-
+*/
 
 //POST-CREATE reserva
 router.post('/', async (req, res, next) => {
