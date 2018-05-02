@@ -177,24 +177,6 @@ con.sync().then( function () {
 	console.log("Cantidad de Clientes:" + usuarios.length);
 	});
 
-	//Instancia de todos los usuarios CLIENTE, imprime cant, usuarios
-	Usuario.findAll({ 
-	  where: {
-	    tipo_usuario: 'Cliente'
-		}
-	  }
-	}).then( function ( usuarios ) {
-	console.log("Cantidad de Clientes:" + usuarios.length);
-	});
-
-	Usuario.findAll({ 
-	  where: {
-	    tipo_usuario: 'Cliente'
-		}
-	  }
-	}).then( function ( usuarios ) {
-	console.log("Cantidad de Clientes:" + usuarios.length);
-	});
 
 
 
