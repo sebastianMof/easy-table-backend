@@ -42,6 +42,35 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+
+//GET-READ consulta todas las mesas
+router.get('/', async(req, res, next) => {
+    models.mesa
+        .findAll()
+        .then(mesa => {
+            if (mesa) {
+                res.json({
+                    status: 1,
+                    statusCode: 'mesa/listing',
+                    data: mesa
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'mesa/not-found',
+                    description: 'There\'s no user information!'
+                });
+            }
+        }).catch(error => {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'database/error',
+            description: error.toString()
+        });
+    });
+});
+
+
 //GET-READ mesa con numero de mesa
 router.get('/:numero', async (req, res, next) => {
     const numero = req.params.numero;
@@ -80,8 +109,8 @@ router.get('/:numero', async (req, res, next) => {
     }
 });
 
-
-router.get('/:capacidad', async(req, res, next) => {  // Obetener todas las mesas con X capacidad
+//GET-READ todas las mesas con capacidad
+router.get('/:capacidad', async(req, res, next) => {  
     const capacidad = req.params.capacidad;
     if (capacidad) {
         models.mesa.findOne({

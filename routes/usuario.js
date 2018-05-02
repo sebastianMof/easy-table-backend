@@ -76,7 +76,7 @@ router.get('/', async(req, res, next) => {
 });
 
 //GET-READ consulta usuario por rut
-router.get('/rut', async(req, res, next) => {
+router.get('/:rut', async(req, res, next) => {
     const rut = req.params.rut;
     if (rut) {
         models.usuario.findOne({
