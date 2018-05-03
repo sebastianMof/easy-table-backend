@@ -211,12 +211,42 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-//
-//GET-READ consulta todos los usuarios
+
+//GET-READ consulta todas las reservas
 router.get('/', async(req, res, next) => {
     models.reserva
         .findAll()
         .then(reserva => {
+            if (reserva) {
+                res.json({
+                    status: 1,
+                    statusCode: 'reserva/listing',
+                    data: reserva
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'reserva/not-found',
+                    description: 'There\'s no user information!'
+                });
+            }
+        }).catch(error => {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'database/error',
+            description: error.toString()
+        });
+    });
+});
+
+//GET-READ consulta todas las reservas activas
+router.get('/activas', async(req, res, next) => {
+    models.reserva
+        models.reserva.findAll({
+            where: {
+                estado: true
+            }
+        }).then(reserva => {
             if (reserva) {
                 res.json({
                     status: 1,

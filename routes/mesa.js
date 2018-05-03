@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 //--------
 
 
@@ -47,12 +49,12 @@ router.post('/', async (req, res, next) => {
 router.get('/', async(req, res, next) => {
     models.mesa
         .findAll()
-        .then(mesa => {
-            if (mesa) {
+        .then(mesas => {
+            if (mesas) {
                 res.json({
                     status: 1,
                     statusCode: 'mesa/listing',
-                    data: mesa
+                    data: mesas
                 });
             } else {
                 res.status(400).json({
@@ -71,8 +73,53 @@ router.get('/', async(req, res, next) => {
 });
 
 
+//GET-READ todas la mesas con capacidad igual o mayor(se obtiene la con menos diferencia)
+router.get('/capacidad/:capacidad', async(req, res, next) => {  
+    const capacidad = req.params.capacidad;
+    if (capacidad) {
+        models.mesa.findOne({
+            where: {
+                capacidad:{
+                    [Op.gte]: capacidad
+                }
+            },
+            order:[
+            ['capacidad','ASC']
+            ]
+        }).then(mesas => {
+            if (mesas) {
+                res.json({
+                    status: 1,
+                    statusCode: 'mesa/found',
+                    data: mesas.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'capacidad-mesa/not-found',
+                    description: 'The capacidad-mesa not found '
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'mesa/wrong-capacidad',
+            description: 'Check the capacidad!'
+        });
+    }
+});
+
+
+
 //GET-READ mesa con numero de mesa
-router.get('/:numero', async (req, res, next) => {
+/*router.get('/numero', async (req, res, next) => {
     const numero = req.params.numero;
     if (numero) {
         models.mesa.findOne({
@@ -107,46 +154,7 @@ router.get('/:numero', async (req, res, next) => {
             description: 'The parameters are wrong! :('
         });
     }
-});
-
-//GET-READ todas las mesas con capacidad
-router.get('/:capacidad', async(req, res, next) => {  
-    const capacidad = req.params.capacidad;
-    if (capacidad) {
-        models.mesa.findOne({
-            where: {
-                capacidad: capacidad
-            }
-        }).then(mesas => {
-            if (mesas) {
-                res.json({
-                    status: 1,
-                    statusCode: 'mesa/found',
-                    data: mesas.toJSON()
-                });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'capacidad-mesa/not-found',
-                    description: 'The capacidad-mesa not found '
-                });
-            }
-        }).catch(error => {
-            res.status(400).json({
-                status: 0,
-                statusCode: 'database/error',
-                description: error.toString()
-            });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'mesa/wrong-capacidad',
-            description: 'Check the capacidad!'
-        });
-    }
-});
-
+});*/
 
 
 //------
