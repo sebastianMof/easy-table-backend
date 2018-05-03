@@ -71,8 +71,7 @@ router.get('/', async(req, res, next) => {
     });
 });
 
-
-//GET-READ todas la mesas con capacidad igual o mayor(se obtiene la con menos diferencia)
+//GET-READ busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia
 router.get('/capacidad/:capacidad', async(req, res, next) => {  
     const capacidad = req.params.capacidad;
     if (capacidad) {
@@ -115,7 +114,6 @@ router.get('/capacidad/:capacidad', async(req, res, next) => {
     }
 });
 
-
 //GET-READ mesa con numero de mesa(para saber capacidad)
 router.get('/numero/:numero', async (req, res, next) => {
     const numero = req.params.numero;
@@ -154,7 +152,43 @@ router.get('/numero/:numero', async (req, res, next) => {
     }
 });
 
+//DELETE-DELETE por numero de mesa
+router.delete('/delete/:numero', async(req, res, next) => {
+    const numero = req.params.numero;
+    if (numero) {
+        models.mesa.destroy({
+            where: {
+                numero: numero
+            }
+        }).then(mesa => {
+            if (mesa) {
+                res.json({
+                    status: 1,
+                    statusCode: 'user deleted',
+                    //data: mesa.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'user no borrado',
+                    description: 'The user was not found with the numero'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'user/wrong-numero',
+            description: 'Check the numero!'
+        });
+    }
+});
 
-//------
 
 module.exports = router;

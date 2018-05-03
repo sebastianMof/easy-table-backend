@@ -6,119 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Crear Usuario",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "rut",
-							"value": "111111111",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "tipo_usuario",
-							"value": "Admin",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "nombre",
-							"value": "Javier",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "apellido",
-							"value": "Lussak",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "correo3@correo.cl",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/usuario/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Usuarios",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Usuario Rut",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "",
-						"value": ""
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/rut/111111111",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						"rut",
-						"111111111"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Crear Mesa",
 			"request": {
 				"method": "POST",
@@ -133,13 +20,13 @@
 					"urlencoded": [
 						{
 							"key": "numero",
-							"value": "6",
+							"value": "1",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "capacidad",
-							"value": "3",
+							"value": "2",
 							"description": "",
 							"type": "text"
 						}
@@ -156,7 +43,8 @@
 						"mesa",
 						""
 					]
-				}
+				},
+				"description": "Crea una mesa con numero y capacidad"
 			},
 			"response": []
 		},
@@ -182,12 +70,13 @@
 						"mesa",
 						""
 					]
-				}
+				},
+				"description": "Muestra todas las mesas del local"
 			},
 			"response": []
 		},
 		{
-			"name": "Ver Mesa con Capacidad",
+			"name": "Ver Mesa(capacidad)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -212,12 +101,13 @@
 						"capacidad",
 						"3"
 					]
-				}
+				},
+				"description": "busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia."
 			},
 			"response": []
 		},
 		{
-			"name": "Ver Capacidad de Mesa",
+			"name": "Ver Mesa(numero)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -242,6 +132,212 @@
 						"numero",
 						"3"
 					]
+				},
+				"description": "Retorna la mesa con el numero pedido"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Mesa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "numero",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/mesa/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"mesa",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "rut",
+							"value": "222222222",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "tipo_usuario",
+							"value": "Admin",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "nombre2",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "apellido",
+							"value": "apellido2",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "correo2@correo.cl",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/usuario/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						""
+					]
+				},
+				"description": "Crea usuario con las keys correspondientes"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/usuario/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						""
+					]
+				},
+				"description": "Retorna todos los usuarios del sistema(Admins y Clientes)"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Usuario(rut)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/usuario/rut/111111111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						"rut",
+						"111111111"
+					]
+				},
+				"description": "Retorna el cliente pedido por rut"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Tipo de Usuario(rut)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/usuario/tipo/192408912",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						"tipo",
+						"192408912"
+					]
+				},
+				"description": "Retorna si el usuario es Admin o Cliente."
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "rut",
+							"value": "222222222",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/usuario/delete/222222222",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						"delete",
+						"222222222"
+					]
 				}
 			},
 			"response": []
@@ -261,13 +357,13 @@
 					"urlencoded": [
 						{
 							"key": "fecha_inicio_reserva",
-							"value": "2018-06-01 19:21:03.000",
+							"value": "2018-06-01 18:21:03.000",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "fecha_fin_reserva",
-							"value": "2018-06-01 21:21:03.000",
+							"value": "2018-06-01 20:21:03.000",
 							"description": "",
 							"type": "text"
 						},
@@ -302,7 +398,8 @@
 						"reserva",
 						""
 					]
-				}
+				},
+				"description": "Crea reserva enviando keys correspondientes"
 			},
 			"response": []
 		},
@@ -328,7 +425,8 @@
 						"reserva",
 						""
 					]
-				}
+				},
+				"description": "Despliega todas las reservas de la historia"
 			},
 			"response": []
 		},
@@ -354,14 +452,15 @@
 						"reserva",
 						"activas"
 					]
-				}
+				},
+				"description": "Despliega todas las reservas que aún siguen activas"
 			},
 			"response": []
 		},
 		{
 			"name": "Liberar Reserva",
 			"request": {
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -372,12 +471,6 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "mesaNumero",
-							"value": "1",
-							"description": "",
-							"type": "text"
-						},
-						{
 							"key": "usuarioRut",
 							"value": "192408911",
 							"description": "",
@@ -385,14 +478,14 @@
 						},
 						{
 							"key": "fecha_inicio_reserva",
-							"value": "2018-05-02T01:21:03.000Z",
+							"value": "2018-06-01T23:21:03.000Z",
 							"description": "",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:5555/reserva/libera/",
+					"raw": "http://localhost:5555/reserva/libera/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -401,9 +494,32 @@
 					"path": [
 						"reserva",
 						"libera",
-						""
+						"1"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Reserva",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/reserva/delete/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"reserva",
+						"delete",
+						"3"
+					]
+				},
+				"description": "Borra reserva por id"
 			},
 			"response": []
 		}
