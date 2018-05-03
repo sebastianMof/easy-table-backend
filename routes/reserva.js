@@ -211,7 +211,6 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-
 //GET-READ consulta todas las reservas
 router.get('/', async(req, res, next) => {
     models.reserva
@@ -241,7 +240,6 @@ router.get('/', async(req, res, next) => {
 
 //GET-READ consulta todas las reservas activas
 router.get('/activas', async(req, res, next) => {
-    models.reserva
         models.reserva.findAll({
             where: {
                 estado: true
@@ -269,7 +267,52 @@ router.get('/activas', async(req, res, next) => {
     });
 });
 
+//PUT-UPDATE libera la mesa, es decir estado de la reserva igual a cero(false)
+router.put('/libera/', async (req, res, next) => {
+    const fecha_inicio_reserva = req.body['fecha_inicio_reserva'];
+    const usuarioRut = req.body['usuarioRut'];
+    const mesaNumero = req.body['mesaNumero'];
 
+    if (numero && fecha_inicio_reserva && usuarioRut) {
+        models.reserva.findOne({
+            where: {
+                mesaNumero: mesaNumero,
+                fecha_inicio_reserva: fecha_inicio_reserva,
+                usuarioRut : usuarioRut
+            }
+        }).then(reserva => {
+            if (reserva) {
+                models.reserva.updateAttributes({
+                    estado: false
+                });
+
+                res.json({
+                    status: 1,
+                    statusCode: 'reserva/found',
+                    data: reserva.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'reserva/not-found',
+                    description: 'The reserva was not found with the numero'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'user/wrong-rut',
+            description: 'Check the rut!'
+        });
+    }
+});
 
 
 module.exports = router;

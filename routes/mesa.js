@@ -44,7 +44,6 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-
 //GET-READ consulta todas las mesas
 router.get('/', async(req, res, next) => {
     models.mesa
@@ -117,9 +116,8 @@ router.get('/capacidad/:capacidad', async(req, res, next) => {
 });
 
 
-
-//GET-READ mesa con numero de mesa
-/*router.get('/numero', async (req, res, next) => {
+//GET-READ mesa con numero de mesa(para saber capacidad)
+router.get('/numero/:numero', async (req, res, next) => {
     const numero = req.params.numero;
     if (numero) {
         models.mesa.findOne({
@@ -154,7 +152,7 @@ router.get('/capacidad/:capacidad', async(req, res, next) => {
             description: 'The parameters are wrong! :('
         });
     }
-});*/
+});
 
 
 //------

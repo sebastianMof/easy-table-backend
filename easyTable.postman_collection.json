@@ -66,108 +66,6 @@
 			"response": []
 		},
 		{
-			"name": "Crear Mesa",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "numero",
-							"value": "5",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "capacidad",
-							"value": "10",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/mesa/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear Reserva",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "fecha_inicio_reserva",
-							"value": "2018-05-01 22:21:03.000",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "fecha_fin_reserva",
-							"value": "2018-05-01 23:21:03.000",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "estado",
-							"value": "1",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "mesaNumero",
-							"value": "5",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "usuarioRut",
-							"value": "192408911",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/reserva/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Ver Usuarios",
 			"request": {
 				"method": "GET",
@@ -187,6 +85,75 @@
 					"port": "5555",
 					"path": [
 						"usuario",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Usuario Rut",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/usuario/rut/111111111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"usuario",
+						"rut",
+						"111111111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Mesa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "numero",
+							"value": "6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "capacidad",
+							"value": "3",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/mesa/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"mesa",
 						""
 					]
 				}
@@ -220,6 +187,126 @@
 			"response": []
 		},
 		{
+			"name": "Ver Mesa con Capacidad",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/mesa/capacidad/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"mesa",
+						"capacidad",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Capacidad de Mesa",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/mesa/numero/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"mesa",
+						"numero",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Reserva",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fecha_inicio_reserva",
+							"value": "2018-06-01 19:21:03.000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "fecha_fin_reserva",
+							"value": "2018-06-01 21:21:03.000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "estado",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mesaNumero",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "usuarioRut",
+							"value": "192408911",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/reserva/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"reserva",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Ver Reservas",
 			"request": {
 				"method": "GET",
@@ -239,6 +326,81 @@
 					"port": "5555",
 					"path": [
 						"reserva",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ver Reservas Activas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5555/reserva/activas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"reserva",
+						"activas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Liberar Reserva",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "mesaNumero",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "usuarioRut",
+							"value": "192408911",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "fecha_inicio_reserva",
+							"value": "2018-05-02T01:21:03.000Z",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5555/reserva/libera/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5555",
+					"path": [
+						"reserva",
+						"libera",
 						""
 					]
 				}
