@@ -268,24 +268,23 @@ router.get('/activas', async(req, res, next) => {
 });
 
 //PUT-UPDATE libera la mesa, es decir estado de la reserva igual a cero(false)
-router.put('/libera/', async (req, res, next) => {
+router.patch('/libera/:mesaNumero', async (req, res, next) => {
     const fecha_inicio_reserva = req.body['fecha_inicio_reserva'];
     const usuarioRut = req.body['usuarioRut'];
-    const mesaNumero = req.body['mesaNumero'];
+    const mesaNumero = req.params.mesaNumero;
 
-    if (numero && fecha_inicio_reserva && usuarioRut) {
+    if (mesaNumero && usuarioRut && fecha_inicio_reserva) {
         models.reserva.findOne({
             where: {
                 mesaNumero: mesaNumero,
-                fecha_inicio_reserva: fecha_inicio_reserva,
+               fecha_inicio_reserva: fecha_inicio_reserva,
                 usuarioRut : usuarioRut
             }
         }).then(reserva => {
             if (reserva) {
-                models.reserva.updateAttributes({
-                    estado: false
+                reserva.updateAttributes({
+                    estado:false
                 });
-
                 res.json({
                     status: 1,
                     statusCode: 'reserva/found',
@@ -308,8 +307,8 @@ router.put('/libera/', async (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-rut',
-            description: 'Check the rut!'
+            statusCode: 'reserva/wrong-atts',
+            description: 'Check the atribs!'
         });
     }
 });
