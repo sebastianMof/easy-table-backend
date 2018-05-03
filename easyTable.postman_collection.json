@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "03e3bcf0-c28e-4146-928f-00822fca16cb",
 		"name": "easyTable",
+		"description": "# Introduction\nReserva de mesas\n\n# Overview\nDiagrama de clases en Repositorio\nhttps://github.com/sebastianMof/easyTable\n\n# Authentication\nNo Auth\n\n# Error Codes\nstatus 0,1 -- 200(OK)\nerrors 400,\n\n# Rate limit\nno limit",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -20,13 +21,13 @@
 					"urlencoded": [
 						{
 							"key": "numero",
-							"value": "1",
+							"value": "8",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "capacidad",
-							"value": "2",
+							"value": "8",
 							"description": "",
 							"type": "text"
 						}
@@ -90,7 +91,7 @@
 				],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5555/mesa/capacidad/3",
+					"raw": "http://localhost:5555/mesa/capacidad/8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +100,7 @@
 					"path": [
 						"mesa",
 						"capacidad",
-						"3"
+						"8"
 					]
 				},
 				"description": "busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia."
@@ -185,7 +186,7 @@
 					"urlencoded": [
 						{
 							"key": "rut",
-							"value": "222222222",
+							"value": "333333333",
 							"description": "",
 							"type": "text"
 						},
@@ -197,19 +198,19 @@
 						},
 						{
 							"key": "nombre",
-							"value": "nombre2",
+							"value": "nombre3",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "apellido",
-							"value": "apellido2",
+							"value": "apellido3",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "correo2@correo.cl",
+							"value": "correo3@correo.cl",
 							"description": "",
 							"type": "text"
 						}
@@ -314,20 +315,9 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "rut",
-							"value": "222222222",
-							"description": "",
-							"type": "text",
-							"disabled": true
-						}
-					]
-				},
+				"body": {},
 				"url": {
-					"raw": "http://localhost:5555/usuario/delete/222222222",
+					"raw": "http://localhost:5555/usuario/delete/333333333",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -336,7 +326,7 @@
 					"path": [
 						"usuario",
 						"delete",
-						"222222222"
+						"333333333"
 					]
 				}
 			},
@@ -357,31 +347,31 @@
 					"urlencoded": [
 						{
 							"key": "fecha_inicio_reserva",
-							"value": "2018-06-01 18:21:03.000",
+							"value": "2018-05-03 15:00:00.000",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "fecha_fin_reserva",
-							"value": "2018-06-01 20:21:03.000",
+							"value": "2018-05-03 17:00:00.000",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "estado",
-							"value": "1",
+							"value": "true",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "mesaNumero",
-							"value": "1",
+							"value": "4",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "usuarioRut",
-							"value": "192408911",
+							"value": "333333333",
 							"description": "",
 							"type": "text"
 						}
@@ -472,20 +462,20 @@
 					"urlencoded": [
 						{
 							"key": "usuarioRut",
-							"value": "192408911",
+							"value": "333333333",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "fecha_inicio_reserva",
-							"value": "2018-06-01T23:21:03.000Z",
+							"value": "2018-05-03T18:00:00.000Z",
 							"description": "",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:5555/reserva/libera/1",
+					"raw": "http://localhost:5555/reserva/libera/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -494,9 +484,10 @@
 					"path": [
 						"reserva",
 						"libera",
-						"1"
+						"4"
 					]
-				}
+				},
+				"description": "Recibe por body rut y fecha_inicio, y un numeroMesa por params, luego libera la reserva(cambia estado a false)"
 			},
 			"response": []
 		},
@@ -507,7 +498,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:5555/reserva/delete/3",
+					"raw": "http://localhost:5555/reserva/delete/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -516,7 +507,7 @@
 					"path": [
 						"reserva",
 						"delete",
-						"3"
+						"4"
 					]
 				},
 				"description": "Borra reserva por id"
