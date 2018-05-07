@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "03e3bcf0-c28e-4146-928f-00822fca16cb",
 		"name": "easyTable",
-		"description": "# Introduction\nSistema de reserva de mesas para un restaurant con bloques tiempo para cada reserva.\n\n# Overview\nDiagrama de clases en Repositorio\nhttps://github.com/sebastianMof/easyTable\n\n# Authentication\nNo Auth\n\n# Error Codes\nstatus 0,1 -- 200(OK)\nerrors 400,\n\n# Rate limit\nno limit",
+		"description": "# Introduction\nSistema de reserva de mesas para un restaurant con bloques tiempo para cada reserva.\n\n# Overview\nUsuario tipo 'Cliente' interactuan con el sistema consultando mesa disponible con horario y capacidad. Luego realiza reserva.\n\nUsuario tipo 'Admin' debe liberar las reservas una vez desocupadas.\n\nDiagrama de clases en Repositorio\nhttps://github.com/sebastianMof/easyTable\n\n# Authentication\nNo Auth\n\n# Error Codes\nstatus 0,1 -- 200(OK)  ,éxito.\nerrors 400, fallo.\n\n# Rate limit\nno limit",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -673,6 +673,9 @@
 				{
 					"name": "fecha2",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {},
@@ -708,7 +711,8 @@
 									"value": "10"
 								}
 							]
-						}
+						},
+						"description": "Arma formato de fecha1 y genera fecha2 (intervalo de tiempo buscado)."
 					},
 					"response": []
 				},
@@ -780,7 +784,8 @@
 								"reservar",
 								""
 							]
-						}
+						},
+						"description": "Recibe todos los parámetros para crear la reserva."
 					},
 					"response": []
 				}
