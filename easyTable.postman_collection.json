@@ -25,31 +25,31 @@
 							"urlencoded": [
 								{
 									"key": "rut",
-									"value": "11111111-1",
+									"value": "33333333-3",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "tipo_usuario",
-									"value": "Admin",
+									"value": "Cliente",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "nombre",
-									"value": "nombre1",
+									"value": "nombre3",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "apellido1",
+									"value": "apellido3",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "correo1@correo.cl",
+									"value": "correo3@correo.cl",
 									"description": "",
 									"type": "text"
 								},
@@ -252,13 +252,13 @@
 							"urlencoded": [
 								{
 									"key": "numero",
-									"value": "5",
+									"value": "6",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "capacidad",
-									"value": "10",
+									"value": "8",
 									"description": "",
 									"type": "text"
 								},
@@ -371,7 +371,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5555/mesa/capacidad/?capacidad=2",
+							"raw": "http://localhost:5555/mesa/capacidad/?capacidad=8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -385,7 +385,7 @@
 							"query": [
 								{
 									"key": "capacidad",
-									"value": "2"
+									"value": "8"
 								}
 							]
 						},
@@ -464,13 +464,13 @@
 							"urlencoded": [
 								{
 									"key": "fecha_inicio_reserva",
-									"value": "2018-05-03 12:00:00.000",
+									"value": "2018-05-03 18:00:00.000",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "fecha_fin_reserva",
-									"value": "2018-05-03 15:00:00.000",
+									"value": "2018-05-03 21:00:00.000",
 									"description": "",
 									"type": "text"
 								},
@@ -591,7 +591,7 @@
 								},
 								{
 									"key": "id",
-									"value": "4",
+									"value": "1",
 									"description": "",
 									"type": "text"
 								}
@@ -661,6 +661,24 @@
 							]
 						},
 						"description": "Borra reserva por id revisando si el usuario es Admin."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservar",
+			"description": "",
+			"item": [
+				{
+					"name": "buscarMesas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},

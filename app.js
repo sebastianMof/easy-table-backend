@@ -8,12 +8,12 @@ const indexRouter = require('./routes/index');
 const mesaRouter = require('./routes/mesa');
 const reservaRouter = require('./routes/reserva');
 const usuarioRouter = require('./routes/usuario');
+
+//--------Testing
+// const reservRouter = require('./routes//reserva');
+// const fechaRouter = require('./routes/fecha2')
+
 //--------
-
-const reservRouter = require('./routes/reserva');
-const fechaRouter = require('./routes/fecha2')
-
-//--------testing
 const app = express();
 
 // view engine setup
@@ -30,9 +30,11 @@ app.use('/', indexRouter);
 app.use('/mesa', mesaRouter);
 app.use('/reserva', reservaRouter);
 app.use('/usuario', usuarioRouter);
+
 //-------testing
-app.use('/reserva', reservRouter);
-app.use('/fecha2', fechaRouter);
+// app.use('/reserva', reservRouter);
+// app.use('/fecha2', fechaRouter);
+
 //-------
 
 

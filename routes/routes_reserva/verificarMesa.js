@@ -8,7 +8,7 @@ router.post('/',async(req, res, next)=>{
   const dia = req.query['fecha1'];
   const mes = req.query['fecha2'];
   const anyo = req.query['mesa'];
-  var reservas_fecha = Reserva.findAll({
+  var reservas_fecha = models.reserva.findAll({
           where: {
             fecha_reserva:{
                 [Op.between]: [fecha1,fecha2]

@@ -6,10 +6,8 @@ const Op = Sequelize.Op;
 
 router.post('/',async(req, res, next)=>{
   let dia = req.query.dia;
-  console.log(dia);
   let mes = req.query.mes;
   let anyo = req.query.anyo;
-  console.log(anyo);
   let hora = req.query.hora;
   let min = req.query.min;
   var fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));

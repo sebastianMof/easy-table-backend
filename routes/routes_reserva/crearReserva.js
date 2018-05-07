@@ -1,6 +1,6 @@
 const models = require('../../models')
 
-function agregarReserva(fecha1, fecha2, mesa, rut){
+function crearReserva(fecha1, fecha2, mesa, rut){
 	models.reserva.create({
             fecha_inicio_reserva: fecha1,
             fecha_fin_reserva: fecha2,
@@ -30,4 +30,4 @@ function agregarReserva(fecha1, fecha2, mesa, rut){
         });
 		}
 
-module.export = agregarReserva;
+module.export = crearReserva;
