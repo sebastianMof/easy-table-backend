@@ -6,6 +6,7 @@ const models = require('../models');
 router.post('/', async (req, res, next) => {
     const rut = req.body['rut'];
     const tipo_usuario = req.body['tipo_usuario'];
+    const password = req.body['password'];
     const nombre = req.body['nombre'];
     const apellido = req.body['apellido'];
     const email = req.body['email'];
@@ -14,6 +15,7 @@ router.post('/', async (req, res, next) => {
         models.usuario.create({
             rut: rut,
             tipo_usuario: tipo_usuario,
+            password: password,
             nombre: nombre,
             apellido: apellido,
             email: email
@@ -49,23 +51,21 @@ router.post('/', async (req, res, next) => {
 
 //GET-READ consulta todos los usuarios
 router.get('/', async(req, res, next) => {
-    models.usuario
-        .findAll()
-        .then(users => {
-            if (users) {
-                res.json({
-                    status: 1,
-                    statusCode: 'users/listing',
-                    data: users
+    models.usuario.findAll().then(users => {
+        if (users) {
+            res.json({
+                status: 1,
+                statusCode: 'users/listing',
+                data: users
                 });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'users/not-found',
-                    description: 'There\'s no user information!'
-                });
-            }
-        }).catch(error => {
+        } else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'users/not-found',
+                description: 'There\'s no user information!'
+            });
+        }
+    }).catch(error => {
         res.status(400).json({
             status: 0,
             statusCode: 'database/error',
@@ -112,7 +112,7 @@ router.get('/rut/:rut', async(req, res, next) => {
     }
 });
 
-//GET-READ consulta tipo de usuario
+//GET-READ consulta tipo de usuario por rut
 router.get('/tipo/:rut', async(req, res, next) => {
     const rut = req.params.rut;
     if (rut) {
@@ -150,26 +150,28 @@ router.get('/tipo/:rut', async(req, res, next) => {
     }
 });
 
-//DELETE-DELETE inseguro por rut
-router.delete('/delete/:rut', async(req, res, next) => {
-    const rut = req.params.rut;
-    if (rut) {
-        models.usuario.destroy({
+//GET-READ exito login por credenciales(rut y pass)
+router.get('/login/', async(req, res, next) => {
+    const rut = req.query.rut;
+    const password = req.query.password;
+    if (rut && password) {
+        models.usuario.findOne({
             where: {
-                rut: rut
+                rut: rut,
+                password: password
             }
         }).then(usuario => {
             if (usuario) {
                 res.json({
                     status: 1,
-                    statusCode: 'user deleted',
-                    //data: usuario.toJSON()
+                    statusCode: 'login/found',
+                    data: usuario.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user no borrado',
-                    description: 'The user was not found with the rut'
+                    statusCode: 'login/not-found',
+                    description: 'Check rut or pass'
                 });
             }
         }).catch(error => {
@@ -184,6 +186,47 @@ router.delete('/delete/:rut', async(req, res, next) => {
             status: 0,
             statusCode: 'user/wrong-rut',
             description: 'Check the rut!'
+        });
+    }
+});
+
+//DELETE-DELETE inseguro por rut
+router.delete('/delete/', async(req, res, next) => {
+
+    const rut = req.body['rut'];
+    const password = req.body['password'];
+
+    if (rut && password) {
+        models.usuario.destroy({
+            where: {
+                rut: rut,
+                password: password
+            }
+        }).then(usuario => {
+            if (usuario) {
+                res.json({
+                    status: 1,
+                    statusCode: 'Usuario borrado',
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'usuario no borrado',
+                    description: 'Usuaro no encontrado con credenciales'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'keys/wrong-keys',
+            description: 'Check the keys!'
         });
     }
 });

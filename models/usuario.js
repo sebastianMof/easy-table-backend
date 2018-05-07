@@ -3,7 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
   const usuario = sequelize.define('usuario', {
     rut: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true //Único, irrepetible y primary key
     },
@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       values: ['Admin', 'Cliente']
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
     nombre: {
       type: DataTypes.STRING,

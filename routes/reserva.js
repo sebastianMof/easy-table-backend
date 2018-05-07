@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-
 //POST-CREATE reserva sin validaciones
 router.post('/', async (req, res, next) => {
     const fecha_inicio_reserva = req.body['fecha_inicio_reserva'];

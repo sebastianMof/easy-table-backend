@@ -3,31 +3,56 @@ const router = express.Router();
 const models = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-//--------
 
 
-//POST-CREATE mesa
+//POST-CREATE mesa con credenciales de Admin
 router.post('/', async (req, res, next) => {
     const numero = req.body['numero'];
     const capacidad = req.body['capacidad'];
-    if (numero && capacidad) {
-        models.mesa.create({
-            numero: numero,
-            capacidad: capacidad
-        }).then(mesa => {
-            if (mesa) {
-                res.json({
-                    status: 1,
-                    statusCode: 'mesa/created',
-                    data: mesa.toJSON()
+    const rut = req.body['rut'];
+    const password = req.body['password'];
+
+    if (numero && capacidad && rut && password) {
+        models.usuario.findOne({
+            where:{
+                rut: rut,
+                password: password,
+                tipo_usuario: 'Admin'
+            }
+        }).then(usuario => {
+            if(usuario){
+                models.mesa.create({
+                    numero: numero,
+                    capacidad: capacidad
+                }).then(mesa => {
+                    if (mesa) {
+                        res.json({
+                            status: 1,
+                            statusCode: 'mesa/created',
+                            data: mesa.toJSON()
+                        });
+                    } else {
+                        res.status(400).json({
+                            status: 0,
+                            statusCode: 'mesa/error',
+                            description: "Couldn't create the mesa"
+                        });
+                    }
+                }).catch(error => {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'database/error',
+                        description: error.toString()
+                    });
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'mesa/error',
-                    description: "Couldn't create the mesa"
+                    statusCode: 'user/not-found',
+                    description: 'The user was not found with the keys or not Admin'
                 });
             }
+
         }).catch(error => {
             res.status(400).json({
                 status: 0,
@@ -35,6 +60,7 @@ router.post('/', async (req, res, next) => {
                 description: error.toString()
             });
         });
+
     } else {
         res.status(400).json({
             status: 0,
@@ -72,8 +98,8 @@ router.get('/', async(req, res, next) => {
 });
 
 //GET-READ busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia
-router.get('/capacidad/:capacidad', async(req, res, next) => {  
-    const capacidad = req.params.capacidad;
+router.get('/capacidad/', async(req, res, next) => {  
+    const capacidad = req.query.capacidad;
     if (capacidad) {
         models.mesa.findOne({
             where: {
@@ -115,8 +141,8 @@ router.get('/capacidad/:capacidad', async(req, res, next) => {
 });
 
 //GET-READ mesa con numero de mesa(para saber capacidad)
-router.get('/numero/:numero', async (req, res, next) => {
-    const numero = req.params.numero;
+router.get('/numero/', async (req, res, next) => {
+    const numero = req.query.numero;
     if (numero) {
         models.mesa.findOne({
             where: {
@@ -153,27 +179,52 @@ router.get('/numero/:numero', async (req, res, next) => {
 });
 
 //DELETE-DELETE por numero de mesa
-router.delete('/delete/:numero', async(req, res, next) => {
-    const numero = req.params.numero;
-    if (numero) {
-        models.mesa.destroy({
-            where: {
-                numero: numero
+router.delete('/delete/', async(req, res, next) => {
+    const numero = req.body['numero'];
+    const rut = req.body['rut'];
+    const password = req.body['password'];
+
+    if (numero && rut && password) {
+        models.usuario.findOne({
+            where:{
+                rut: rut,
+                password: password,
+                tipo_usuario: 'Admin'
             }
-        }).then(mesa => {
-            if (mesa) {
-                res.json({
-                    status: 1,
-                    statusCode: 'user deleted',
-                    //data: mesa.toJSON()
+        }).then(usuario => {
+            if(usuario){
+                models.mesa.destroy({
+                    where:{
+                        numero: numero
+                    }
+                }).then(mesa => {
+                    if (mesa) {
+                        res.json({
+                            status: 1,
+                            statusCode: 'mesa/deleted',
+                        });
+                    } else {
+                        res.status(400).json({
+                            status: 0,
+                            statusCode: 'mesa/error',
+                            description: "Couldn't delete the mesa"
+                        });
+                    }
+                }).catch(error => {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'database/error',
+                        description: error.toString()
+                    });
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user no borrado',
-                    description: 'The user was not found with the numero'
+                    statusCode: 'user/not-found',
+                    description: 'The user was not found with the keys or not Admin'
                 });
             }
+
         }).catch(error => {
             res.status(400).json({
                 status: 0,
@@ -181,14 +232,14 @@ router.delete('/delete/:numero', async(req, res, next) => {
                 description: error.toString()
             });
         });
+
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-numero',
-            description: 'Check the numero!'
+            statusCode: 'mesa/wrong-body',
+            description: 'The body is wrong! :('
         });
     }
 });
-
 
 module.exports = router;
