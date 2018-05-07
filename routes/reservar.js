@@ -17,6 +17,7 @@ router.post('/',async(req, res, next)=>{
   const capacidad = req.query['capacidad'];
   var fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));
   var fecha2 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora)+3, parseInt(min));
+  
   if(fecha1 && mesa){ //Si la mesa fue especificada
   	if(verificarFechaMesa(fecha1, fecha2, mesa)){ //Se verifica si existe una reserva con esa mesa en esa fecha
   		crearReserva(fecha1, fecha2, mesa, rut); //Se procede a reservar

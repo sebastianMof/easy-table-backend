@@ -10,9 +10,9 @@ router.post('/',async(req, res, next)=>{
   let anyo = req.query.anyo;
   let hora = req.query.hora;
   let min = req.query.min;
-  var fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));
-  var fecha2 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora)+3, parseInt(min));
-  var fecha3 = new Date(2018,1,2,20,33);
+  let fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));
+  let fecha2 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora)+3, parseInt(min));
+  let fecha3 = new Date(2018,1,2,20,33);
   let json = {
   	fecha1:fecha1,
   	fecha2:fecha2,

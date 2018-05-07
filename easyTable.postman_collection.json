@@ -25,7 +25,7 @@
 							"urlencoded": [
 								{
 									"key": "rut",
-									"value": "33333333-3",
+									"value": "44444444-4",
 									"description": "",
 									"type": "text"
 								},
@@ -37,19 +37,19 @@
 								},
 								{
 									"key": "nombre",
-									"value": "nombre3",
+									"value": "nombre4",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "apellido3",
+									"value": "apellido4",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "correo3@correo.cl",
+									"value": "correo4@correo.cl",
 									"description": "",
 									"type": "text"
 								},
@@ -148,7 +148,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5555/usuario/rut/11111111-1",
+							"raw": "http://localhost:5555/usuario/rut/44444444-4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -157,7 +157,7 @@
 							"path": [
 								"usuario",
 								"rut",
-								"11111111-1"
+								"44444444-4"
 							]
 						},
 						"description": "Retorna el cliente pedido por rut."
@@ -171,7 +171,7 @@
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5555/usuario/tipo/11111111-1",
+							"raw": "http://localhost:5555/usuario/tipo/44444444-4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -180,7 +180,7 @@
 							"path": [
 								"usuario",
 								"tipo",
-								"11111111-1"
+								"44444444-4"
 							]
 						},
 						"description": "Retorna si el usuario es Admin o Cliente."
@@ -202,7 +202,7 @@
 							"urlencoded": [
 								{
 									"key": "rut",
-									"value": "11111111-1",
+									"value": "44444444-4",
 									"description": "",
 									"type": "text"
 								},
@@ -252,13 +252,13 @@
 							"urlencoded": [
 								{
 									"key": "numero",
-									"value": "6",
+									"value": "7",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "capacidad",
-									"value": "8",
+									"value": "6",
 									"description": "",
 									"type": "text"
 								},
@@ -334,7 +334,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://localhost:5555/mesa/numero/?numero=3",
+							"raw": "http://localhost:5555/mesa/numero/?numero=7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -348,7 +348,7 @@
 							"query": [
 								{
 									"key": "numero",
-									"value": "3"
+									"value": "7"
 								}
 							]
 						},
@@ -671,13 +671,43 @@
 			"description": "",
 			"item": [
 				{
-					"name": "buscarMesas",
+					"name": "fecha2",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {},
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:5555/fecha2?anyo=2018&mes=10&dia=10&hora=10&min=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"fecha2"
+							],
+							"query": [
+								{
+									"key": "anyo",
+									"value": "2018"
+								},
+								{
+									"key": "mes",
+									"value": "10"
+								},
+								{
+									"key": "dia",
+									"value": "10"
+								},
+								{
+									"key": "hora",
+									"value": "10"
+								},
+								{
+									"key": "min",
+									"value": "10"
+								}
+							]
 						}
 					},
 					"response": []
