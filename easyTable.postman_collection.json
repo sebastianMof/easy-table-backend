@@ -2,517 +2,741 @@
 	"info": {
 		"_postman_id": "03e3bcf0-c28e-4146-928f-00822fca16cb",
 		"name": "easyTable",
-		"description": "# Introduction\nReserva de mesas\n\n# Overview\nDiagrama de clases en Repositorio\nhttps://github.com/sebastianMof/easyTable\n\n# Authentication\nNo Auth\n\n# Error Codes\nstatus 0,1 -- 200(OK)\nerrors 400,\n\n# Rate limit\nno limit",
+		"description": "# Introduction\nSistema de reserva de mesas para un restaurant con bloques tiempo para cada reserva.\n\n# Overview\nDiagrama de clases en Repositorio\nhttps://github.com/sebastianMof/easyTable\n\n# Authentication\nNo Auth\n\n# Error Codes\nstatus 0,1 -- 200(OK)\nerrors 400,\n\n# Rate limit\nno limit",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crear Mesa",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "numero",
-							"value": "8",
-							"description": "",
-							"type": "text"
+			"name": "Usuario",
+			"description": "Requests de usuario",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "tipo_usuario",
+									"value": "Admin",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "nombre1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "apellido1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "correo1@correo.cl",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "capacidad",
-							"value": "8",
-							"description": "",
-							"type": "text"
-						}
-					]
+						"url": {
+							"raw": "http://localhost:5555/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								""
+							]
+						},
+						"description": "Crea usuario con las keys correspondientes."
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:5555/mesa/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						""
-					]
+				{
+					"name": "Login(rut,pass)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/usuario/login?rut=11111111-1&password=password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								"login"
+							],
+							"query": [
+								{
+									"key": "rut",
+									"value": "11111111-1"
+								},
+								{
+									"key": "password",
+									"value": "password"
+								}
+							]
+						},
+						"description": "Chequea rut y password(credenciales) y retorna exito si existe."
+					},
+					"response": []
 				},
-				"description": "Crea una mesa con numero y capacidad"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Mesas",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/mesa/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						""
-					]
+				{
+					"name": "Ver Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								""
+							]
+						},
+						"description": "Retorna todos los usuarios del sistema(Admins y Clientes)."
+					},
+					"response": []
 				},
-				"description": "Muestra todas las mesas del local"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Mesa(capacidad)",
-			"request": {
-				"auth": {
-					"type": "noauth"
+				{
+					"name": "Ver Usuario(rut)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/usuario/rut/11111111-1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								"rut",
+								"11111111-1"
+							]
+						},
+						"description": "Retorna el cliente pedido por rut."
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/mesa/capacidad/8",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						"capacidad",
-						"8"
-					]
+				{
+					"name": "Ver Tipo de Usuario(rut)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/usuario/tipo/11111111-1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								"tipo",
+								"11111111-1"
+							]
+						},
+						"description": "Retorna si el usuario es Admin o Cliente."
+					},
+					"response": []
 				},
-				"description": "busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia."
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Mesa(numero)",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/mesa/numero/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						"numero",
-						"3"
-					]
-				},
-				"description": "Retorna la mesa con el numero pedido"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar Mesa",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "numero",
-							"value": "1",
-							"description": "",
-							"type": "text",
-							"disabled": true
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/mesa/delete/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"mesa",
-						"delete",
-						"1"
-					]
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5555/usuario/delete/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"usuario",
+								"delete",
+								""
+							]
+						},
+						"description": "Borra el usuario revisando las keys rut y password."
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Crear Usuario",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "rut",
-							"value": "333333333",
-							"description": "",
-							"type": "text"
+			"name": "Mesa",
+			"description": "",
+			"item": [
+				{
+					"name": "Crear Mesa",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "numero",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "capacidad",
+									"value": "10",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "tipo_usuario",
-							"value": "Admin",
-							"description": "",
-							"type": "text"
+						"url": {
+							"raw": "http://localhost:5555/mesa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"mesa",
+								""
+							]
 						},
-						{
-							"key": "nombre",
-							"value": "nombre3",
-							"description": "",
-							"type": "text"
+						"description": "Crea una mesa con numero y capacidad revisando si el usuario es Admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Mesas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/mesa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"mesa",
+								""
+							]
 						},
-						{
-							"key": "apellido",
-							"value": "apellido3",
-							"description": "",
-							"type": "text"
+						"description": "Muestra todas las mesas del local."
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Mesa(numero)",
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
-						{
-							"key": "email",
-							"value": "correo3@correo.cl",
-							"description": "",
-							"type": "text"
-						}
-					]
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/mesa/numero/?numero=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"mesa",
+								"numero",
+								""
+							],
+							"query": [
+								{
+									"key": "numero",
+									"value": "3"
+								}
+							]
+						},
+						"description": "Retorna la mesa con el numero de mesa pedido."
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:5555/usuario/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						""
-					]
+				{
+					"name": "Ver Mesa(capacidad)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/mesa/capacidad/?capacidad=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"mesa",
+								"capacidad",
+								""
+							],
+							"query": [
+								{
+									"key": "capacidad",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia."
+					},
+					"response": []
 				},
-				"description": "Crea usuario con las keys correspondientes"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Usuarios",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						""
-					]
-				},
-				"description": "Retorna todos los usuarios del sistema(Admins y Clientes)"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Usuario(rut)",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "",
-						"value": ""
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/rut/111111111",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						"rut",
-						"111111111"
-					]
-				},
-				"description": "Retorna el cliente pedido por rut"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Tipo de Usuario(rut)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/tipo/192408912",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						"tipo",
-						"192408912"
-					]
-				},
-				"description": "Retorna si el usuario es Admin o Cliente."
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar Usuario",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/usuario/delete/333333333",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"usuario",
-						"delete",
-						"333333333"
-					]
+				{
+					"name": "Borrar Mesa",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "numero",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5555/mesa/delete/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"mesa",
+								"delete",
+								""
+							]
+						},
+						"description": "Borra mesa por el numero de mesa revisando si el usuario es Admin."
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Crear Reserva",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "fecha_inicio_reserva",
-							"value": "2018-05-03 15:00:00.000",
-							"description": "",
-							"type": "text"
+			"name": "Reserva",
+			"description": "",
+			"item": [
+				{
+					"name": "Crear Reserva",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "fecha_inicio_reserva",
+									"value": "2018-05-03 12:00:00.000",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "fecha_fin_reserva",
+									"value": "2018-05-03 15:00:00.000",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "true",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mesaNumero",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "usuarioRut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								}
+							]
 						},
-						{
-							"key": "fecha_fin_reserva",
-							"value": "2018-05-03 17:00:00.000",
-							"description": "",
-							"type": "text"
+						"url": {
+							"raw": "http://localhost:5555/reserva/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reserva",
+								""
+							]
 						},
-						{
-							"key": "estado",
-							"value": "true",
-							"description": "",
-							"type": "text"
+						"description": "Crea reserva enviando keys correspondientes, estas deben ser previamente revisadas."
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Reservas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/reserva/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reserva",
+								""
+							]
 						},
-						{
-							"key": "mesaNumero",
-							"value": "4",
-							"description": "",
-							"type": "text"
+						"description": "Despliega todas las reservas de la historia."
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Reservas Activas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:5555/reserva/activas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reserva",
+								"activas"
+							]
 						},
-						{
-							"key": "usuarioRut",
-							"value": "333333333",
-							"description": "",
-							"type": "text"
+						"description": "Despliega todas las reservas que aún siguen activas, es decir, su estado es true."
+					},
+					"response": []
+				},
+				{
+					"name": "Liberar Reserva(idReserva)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "4",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5555/reserva/libera/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reserva",
+								"libera",
+								""
+							]
+						},
+						"description": "Recibe por body el id de la reserva a liberar y revisa si el usuario es Admin. Luego, si las keys son correctas se libera la mesa(estado se cambia a false)."
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Reserva",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "rut",
+									"value": "11111111-1",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "4",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5555/reserva/delete/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reserva",
+								"delete",
+								""
+							]
+						},
+						"description": "Borra reserva por id revisando si el usuario es Admin."
+					},
+					"response": []
+				},
+				{
+					"name": "Reservar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dia",
+									"value": "6",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mes",
+									"value": "4",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "anyo",
+									"value": "2018",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "hora",
+									"value": "16",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "min",
+									"value": "5",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "rut",
+									"value": "111111111",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mesa",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5555/reservar/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"reservar",
+								""
+							]
 						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/reserva/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						""
-					]
-				},
-				"description": "Crea reserva enviando keys correspondientes"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Reservas",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/reserva/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						""
-					]
-				},
-				"description": "Despliega todas las reservas de la historia"
-			},
-			"response": []
-		},
-		{
-			"name": "Ver Reservas Activas",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/reserva/activas",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						"activas"
-					]
-				},
-				"description": "Despliega todas las reservas que aún siguen activas"
-			},
-			"response": []
-		},
-		{
-			"name": "Liberar Reserva",
-			"request": {
-				"method": "PATCH",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "usuarioRut",
-							"value": "333333333",
-							"description": "",
-							"type": "text"
-						},
-						{
-							"key": "fecha_inicio_reserva",
-							"value": "2018-05-03T18:00:00.000Z",
-							"description": "",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:5555/reserva/libera/4",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						"libera",
-						"4"
-					]
-				},
-				"description": "Recibe por body rut y fecha_inicio, y un numeroMesa por params, luego libera la reserva(cambia estado a false)"
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar Reserva",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {},
-				"url": {
-					"raw": "http://localhost:5555/reserva/delete/4",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5555",
-					"path": [
-						"reserva",
-						"delete",
-						"4"
-					]
-				},
-				"description": "Borra reserva por id"
-			},
-			"response": []
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
