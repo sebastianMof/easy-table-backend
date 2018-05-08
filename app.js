@@ -34,7 +34,7 @@ app.use('/usuario', usuarioRouter);
 //-------testing
 //app.use('/reserva', reservRouter);
 app.use('/fecha2', fechaRouter);
-app.use('/test',test);
+app.use('/verificarMesa',test);
 
 //-------
 
