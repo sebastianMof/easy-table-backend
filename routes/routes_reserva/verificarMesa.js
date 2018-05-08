@@ -5,11 +5,10 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 router.get('/',async(req, res, next)=>{
-  const fecha1 = req.query['fecha1'];
-  const fecha2 = req.query['fecha2'];
-  const mesa = req.query['mesa'];
 
-
+  const fecha1 = req.query.fecha1;
+  const fecha2 = req.query.fecha2;
+  const mesa = req.query.mesa;
 
   models.reserva.findAll({ //await
           where: {

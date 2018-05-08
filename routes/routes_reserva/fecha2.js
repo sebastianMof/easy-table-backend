@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment')
 const router = express.Router();
 const models = require('../../models');
 const Sequelize = require('sequelize');
@@ -12,14 +13,10 @@ router.post('/',async(req, res, next)=>{
   let min = req.query.min;
   let fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));
   let fecha2 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora)+3, parseInt(min));
-  let fecha3 = new Date(2018,1,2,20,33);
+
   let json = {
   	fecha1:fecha1,
-  	fecha2:fecha2,
-  	fecha3:fecha3,
-  	dia:dia,
-  	mes:mes,
-  	anyo:anyo
+  	fecha2:fecha2
   }
   res.send(json);
 });
