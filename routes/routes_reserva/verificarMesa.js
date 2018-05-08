@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../models');
+const models = require('../../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 router.post('/',async(req, res, next)=>{
   const dia = req.query['fecha1'];
   const mes = req.query['fecha2'];
-  const anyo = req.query['mesa'];
-  var reservas_fecha = models.reserva.findAll({
+  const mesa = req.query['mesa'];
+  var reservas_fecha = models.reserva.findAll({ //await
           where: {
             fecha_reserva:{
                 [Op.between]: [fecha1,fecha2]

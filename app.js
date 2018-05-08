@@ -11,7 +11,7 @@ const usuarioRouter = require('./routes/usuario');
 
 //--------Testing
 //const reservRouter = require('./routes//reserva');
-const fechaRouter = require('./routes/fecha2');
+const fechaRouter = require('./routes/routes_reserva/fecha2');
 
 //--------
 const app = express();
