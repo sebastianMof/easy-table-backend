@@ -12,7 +12,7 @@ const usuarioRouter = require('./routes/usuario');
 //--------Testing
 //const reservRouter = require('./routes//reserva');
 const fechaRouter = require('./routes/routes_reserva/fecha2');
-
+const test = require('./routes/routes_reserva/verificarMesa');
 //--------
 const app = express();
 
@@ -34,6 +34,7 @@ app.use('/usuario', usuarioRouter);
 //-------testing
 //app.use('/reserva', reservRouter);
 app.use('/fecha2', fechaRouter);
+app.use('/test',test);
 
 //-------
 
