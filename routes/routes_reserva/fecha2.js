@@ -22,7 +22,7 @@ router.post('/',async(req, res, next)=>{
   
   //console.log(moment(fechaMoment).format('YYYY MM DD'));
   console.log(moment(fechaMoment2).isBetween(fechaMoment1,fechaMoment3));
-  moment(fechaMoment1).toDate().
+  console.log(moment(fechaMoment1).toDate());
 
   let json = {
   	fecha1:fecha1,
