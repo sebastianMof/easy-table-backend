@@ -8,12 +8,16 @@ const indexRouter = require('./routes/index');
 const mesaRouter = require('./routes/mesa');
 const reservaRouter = require('./routes/reserva');
 const usuarioRouter = require('./routes/usuario');
+//--------
+const reservarRouter = require('./routes/reservar');
+const test2Router = require('./routes/test2');
 
 //--------Testing
-const reservarRouter = require('./routes/reservar');
 const fechaRouter = require('./routes/routes_reserva/fecha2');
-const test = require('./routes/routes_reserva/verificarMesa');
+const test = require('./routes/routes_reserva/verificarFechaMesa');
 //--------
+
+
 const app = express();
 
 // view engine setup
@@ -30,11 +34,14 @@ app.use('/', indexRouter);
 app.use('/mesa', mesaRouter);
 app.use('/reserva', reservaRouter);
 app.use('/usuario', usuarioRouter);
+//----------
+app.use('/reservar', reservarRouter);
+app.use('/test2', test2Router);
 
 //-------testing
 app.use('/reservar', reservarRouter);
 app.use('/fecha2', fechaRouter);
-app.use('/verificarMesa',test);
+app.use('/verificarFechaMesa',test);
 
 //-------
 
