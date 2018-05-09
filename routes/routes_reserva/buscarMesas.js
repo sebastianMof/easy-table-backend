@@ -1,22 +1,39 @@
-const express = require('express');
-const router = express.Router();
-const models = require('../../models');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const models = require('../../models')
 
-router.post('/',async(req, res, next)=>{
-  const dia = req.query['capacidad'];
-  var mesas_con_capacidad = models.mesa.findAll({ //Esto busca las mesas que sirven según la capacidad pedida
-          where: {
-            capacidad:{
-                [Op.gte]: 'capacidad',
-            }
-          }
+function buscarMesa(fecha1, fecha2, mesa, rut){
+
+  var a = models.reserva.create({
+            fecha_inicio_reserva: fecha1,
+            fecha_fin_reserva: fecha2,
+            estado: true,
+            mesaNumero: mesa,
+            usuarioRut: rut
+        }).then(reserva => {
+            return new Promise((resolve,reject)=>{
+                if(reserva){
+                    resolve({
+                        status: 1,
+                        statusCode: 'reserva/created',
+                        data: reserva.toJSON()
+                    });
+                }
+                reject({
+                    status: 0,
+                    statusCode: 'reserva/error',
+                    description: "Couldn't create the reserva"  
+                })
+            });
+        }).catch(error => {
+            return new Promise((resolve,reject)=>{
+                reject({
+                    status: 0,
+                    statusCode: 'database/error',
+                    description: error.toString()    
+                })
+            });
         });
-  let json = {
-  	mesas_con_capacidad:mesas_con_capacidad
-  }
-  res.send(json);
-});
+    
+    return a;
+}
 
-module.exports = router;
+module.exports = crearReserva;
