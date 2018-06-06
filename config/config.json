@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "easyTable",
+    "database": "easy-table-backend",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
@@ -12,7 +12,7 @@
     "storage": "db.sqlite"
   },
   "test": {
-    "database": "easyTable",
+    "database": "easy-table-backend",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
@@ -24,7 +24,7 @@
     "storage": "db.sqlite"
   },
   "production": {
-    "database": "easyTable",
+    "database": "easy-table-backend",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
