@@ -190,7 +190,7 @@ router.get('/login/', async(req, res, next) => {
     }
 });
 
-//DELETE-DELETE inseguro por rut
+//DELETE
 router.delete('/delete/', async(req, res, next) => {
 
     const rut = req.body['rut'];

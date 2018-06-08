@@ -1,10 +1,8 @@
 const models = require('../../models');
 const Sequelize = require('sequelize');
-const moment = require('moment');
 const Op = Sequelize.Op;
 
 module.exports =  async(fecha1, fecha2, mesa)=>{
-  console.log({fecha1:fecha1,fecha2:fecha2,mesa:mesa}); 
   let reserva = models.reserva.findAll({
     where: {
       [Op.or]:[
@@ -18,7 +16,7 @@ module.exports =  async(fecha1, fecha2, mesa)=>{
           [Op.between] : [fecha1, fecha2]
         }
       },
-      { //Comienzo tercer elemento
+      { 
         [Op.and]:[{fecha_inicio_reserva: {
           [Op.lte]: fecha1
         }},{
@@ -26,8 +24,8 @@ module.exports =  async(fecha1, fecha2, mesa)=>{
             [Op.gte] : fecha2
           }
         }]
-      },//Fin tercer elemento
-      { //Comienzo cuarto elemento
+      },
+      { 
         [Op.and]:[{fecha_inicio_reserva: {
           [Op.gte]: fecha1
         }},{
@@ -35,7 +33,7 @@ module.exports =  async(fecha1, fecha2, mesa)=>{
             [Op.lte] : fecha2
           }
         }]
-      }],//Fin cuarto elemento
+      }],
       estado: true,
       mesaNumero: mesa
     }

@@ -3,19 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+//--------routes---------------
 const indexRouter = require('./routes/index');
 const mesaRouter = require('./routes/mesa');
 const reservaRouter = require('./routes/reserva');
 const usuarioRouter = require('./routes/usuario');
-//--------
 const reservarRouter = require('./routes/reservar');
-const test2Router = require('./routes/test2');
-
-//--------Testing
-const fechaRouter = require('./routes/routes_reserva/fecha2');
 const test = require('./routes/routes_reserva/verificarFechaMesa');
-//--------
+//-----------------------------
 
 
 const app = express();
@@ -36,13 +31,8 @@ app.use('/reserva', reservaRouter);
 app.use('/usuario', usuarioRouter);
 //----------
 app.use('/reservar', reservarRouter);
-app.use('/test2', test2Router);
-
-//-------testing
 app.use('/reservar', reservarRouter);
-app.use('/fecha2', fechaRouter);
 app.use('/verificarFechaMesa',test);
-
 //-------
 
 

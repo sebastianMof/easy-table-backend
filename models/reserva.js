@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: null
     },
     estado: { //Esto no debe ingresarse, solo puede ser cambiado si es necesario
-      type: DataTypes.BOOLEAN, //TRUE = Mesa está efectivamente tomada
+      type: DataTypes.BOOLEAN, //TRUE = Mesa está efectivamente tomada, FALSE=Se desocupó
       defaultValue: true
    }
 
