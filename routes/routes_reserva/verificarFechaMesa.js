@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 module.exports =  async(fecha1, fecha2, mesa)=>{
+  console.log('verificar')
     let reserva = models.reserva.findAll({
       where: {
         [Op.or]:[
@@ -48,6 +49,7 @@ module.exports =  async(fecha1, fecha2, mesa)=>{
       })
     })
     .catch(err =>{
+      
       return new Promise(
         (resolve,reject)=>reject(err))
       });

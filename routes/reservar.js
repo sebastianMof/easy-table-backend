@@ -33,13 +33,45 @@ router.post('/',async(req, res, next)=>{
                 console.log('err : ' + err);
             })
     }else{
-        buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
-                .then(async(mesas) => {
+        try {
+            let mesas = await buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
+            if(mesas !== false){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
+                temp = false;
+                for (var i = 0; i < mesas.length; i++) {
+                    temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
+                    console.log(temp)
+                    console.log(i)
+                    if(temp === true){//se encuentra la primera mesa disponible en el horario
+                        console.log('testing');
+                        crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
+                            .then( reserva =>{
+                                res.send(reserva);
+                                console.log(reserva);
+                            })
+                            .catch( err =>{
+                                console.log('err : ' + err);
+                            })
+                        break;
+                    }
+                } 
+                if(temp === false) {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'mesa/error',
+                        description: "No se creo la reserva"
+                    });
+                }
+            }   
+        } catch(e) {
+            console.log(e)
+        }
+        
+            /*.then(async(mesas) => {
                     if(mesas){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
                         temp = false;
                         for (var i = 0; i <= mesas.length; i++) {
-                            
                             temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
+                            console.log(temp)
                             if(temp){//se encuentra la primera mesa disponible en el horario
                                 console.log('testing');
                                 crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
@@ -69,7 +101,7 @@ router.post('/',async(req, res, next)=>{
                         description: "no hay mesas con esa capacidad"
                         });
                     }       
-                }).catch(err => res.send(err));
+                }).catch(err => res.send(err));*/
     }
 });
 
