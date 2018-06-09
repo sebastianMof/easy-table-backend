@@ -38,11 +38,10 @@ router.post('/',async(req, res, next)=>{
                     if(mesas){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
                         temp = false;
                         for (var i = 0; i <= mesas.length; i++) {
+                            
                             temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
                             if(temp){//se encuentra la primera mesa disponible en el horario
-                                console.log('Mesa Disponible, se crea reserva en la mesa:');
-                                console.log(mesas[i].numero);
-
+                                console.log('testing');
                                 crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
                                     .then( reserva =>{
                                         res.send(reserva);
@@ -51,33 +50,27 @@ router.post('/',async(req, res, next)=>{
                                     .catch( err =>{
                                         console.log('err : ' + err);
                                     })
-
-                                break;
-
                             }
-
                         }
+                        console.log('testing');
+                        console.log(temp);
                         if(temp==false){
-                            //todas las mesas con esa capacidad o mas estas ocupadas en ese horario
+                            //todas las mesas con esa capacidad o mas estas ocupadas en ese horario                            
                             res.status(400).json({
                             status: 0,
                             statusCode: 'reservar/error',
                             description: "todas las mesas con esa capacidad o mas estas ocupadas en ese horario"
                             });
                         }
-
                     }else{//no hay mesas con esa capacidad
                         res.status(400).json({
-                            status: 0,
-                            statusCode: 'reservar/error',
-                            description: "no hay mesas con esa capacidad"
-                            });
-                    }
-                          
+                        status: 0,
+                        statusCode: 'reservar/error',
+                        description: "no hay mesas con esa capacidad"
+                        });
+                    }       
                 }).catch(err => res.send(err));
     }
-
-
 });
 
 module.exports = router;
