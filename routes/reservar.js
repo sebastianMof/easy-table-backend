@@ -5,7 +5,7 @@ const models = require('../models');
 //----------
 let verificarFechaMesa = require('./routes_reserva/verificarFechaMesa');
 let crearReserva = require('./routes_reserva/crearReserva');
-//let buscarMesa = require('./routes_reserva/buscarMesa');
+let buscarMesa = require('./routes_reserva/buscarMesa');
 
 router.post('/',async(req, res, next)=>{
 	const dia = req.body['dia'];
@@ -20,51 +20,62 @@ router.post('/',async(req, res, next)=>{
 	let fecha1 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora), parseInt(min));
 	let fecha2 = new Date(parseInt(anyo), parseInt(mes), parseInt(dia), parseInt(hora)+3, parseInt(min));// +3 para testing, puede tener cualquier duracion
 
-	//falta chequear datos no nulos
+    var temp = false;
+    temp = await verificarFechaMesa(fecha1, fecha2, mesa);
 
-/*	if(verificarFechaMesa(fecha1, fecha2, mesa).then(response => res.send(response)).catch(err => res.send(err))){ //Verifica si existe al menos una reserva en esa mesa entre esas fechas, TRUE=No existen;FALSE=Existe al menos una
-		crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
-			.then( res =>{
-				console.log(res);
-			})
-			.catch( err =>{
-				console.log('err : ' + err);
-			})
-	}*/
+    if(temp){ //True si no hay reservas en mesa entre fechas
+        crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
+            .then( reserva =>{
+                res.send(reserva);
+                console.log(reserva);
+            })
+            .catch( err =>{
+                console.log('err : ' + err);
+            })
+    }else{
+        buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
+                .then(async(mesas) => {
+                    if(mesas){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
+                        temp = false;
+                        for (var i = 0; i <= mesas.length; i++) {
+                            temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
+                            if(temp){//se encuentra la primera mesa disponible en el horario
+                                console.log('Mesa Disponible, se crea reserva en la mesa:');
+                                console.log(mesas[i].numero);
 
-	//console.log(buscarMesa(fecha1, fecha2, capacidad));
+                                crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
+                                    .then( reserva =>{
+                                        res.send(reserva);
+                                        console.log(reserva);
+                                    })
+                                    .catch( err =>{
+                                        console.log('err : ' + err);
+                                    })
 
+                                break;
 
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;	
-function buscarMesa(fecha1, fecha2, capacidad) {
-   return models.mesa.findAll({
-     where: {
-        capacidad:{
-            [Op.gte]: capacidad
-        }
-    },
-    order:[
-    ['capacidad','ASC']
-    ]
-    });
-}
+                            }
 
-buscarMesa(fecha1,fecha2,capacidad).then(function(result){
-   console.log(result[0].numero);
-});
+                        }
+                        if(temp==false){
+                            //todas las mesas con esa capacidad o mas estas ocupadas en ese horario
+                            res.status(400).json({
+                            status: 0,
+                            statusCode: 'reservar/error',
+                            description: "todas las mesas con esa capacidad o mas estas ocupadas en ese horario"
+                            });
+                        }
 
-
-
-
-	// if(fecha1 && mesa){ //Si la mesa fue especificada
-	//  if(verificarFechaMesa(fecha1, fecha2, mesa)){ 
-	//    crearReserva(fecha1, fecha2, mesa, rut); //Se procede a reservar
-	//  }
-	// }else if (fecha1 && capacidad){ //Se necesita buscar una mesa
-	//  let mesa = buscarMesa(fecha1, fecha2, capacidad); //Se busca una mesa con esos parametros
-	//  if(mesa) crearReserva(fecha1, fecha2, mesa, rut); //Si se encuentra se crea la reserva
-	// }
+                    }else{//no hay mesas con esa capacidad
+                        res.status(400).json({
+                            status: 0,
+                            statusCode: 'reservar/error',
+                            description: "no hay mesas con esa capacidad"
+                            });
+                    }
+                          
+                }).catch(err => res.send(err));
+    }
 
 
 });
