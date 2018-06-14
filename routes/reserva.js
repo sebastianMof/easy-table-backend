@@ -38,8 +38,10 @@ router.post('/',async(req, res, next)=>{
 
 
         var temp = false;
+        if(mesa){
         temp = await verificarFechaMesa(fecha1, fecha2, mesa);
-
+        }
+        
         if(temp){ //True si no hay reservas en mesa entre fechas
             crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
                 .then( reserva =>{

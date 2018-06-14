@@ -25,27 +25,28 @@
 							"urlencoded": [
 								{
 									"key": "rut",
-									"value": "44444444-4",
+									"value": "22222222-2",
 									"type": "text"
 								},
 								{
 									"key": "tipo_usuario",
 									"value": "Cliente",
-									"type": "text"
+									"type": "text",
+									"description": "'Admin' o 'Cliente'"
 								},
 								{
 									"key": "nombre",
-									"value": "nombre4",
+									"value": "nombre2",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "apellido4",
+									"value": "apellido2",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "correo4@correo.cl",
+									"value": "correo2@correo.cl",
 									"type": "text"
 								},
 								{
@@ -268,12 +269,12 @@
 							"urlencoded": [
 								{
 									"key": "numero",
-									"value": "2",
+									"value": "7",
 									"type": "text"
 								},
 								{
 									"key": "capacidad",
-									"value": "6",
+									"value": "8",
 									"type": "text"
 								},
 								{
@@ -482,7 +483,7 @@
 							"urlencoded": [
 								{
 									"key": "anyo1",
-									"value": "2086",
+									"value": "2018",
 									"type": "text"
 								},
 								{
@@ -492,12 +493,12 @@
 								},
 								{
 									"key": "dia1",
-									"value": "3",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "hora1",
-									"value": "19",
+									"value": "10",
 									"type": "text"
 								},
 								{
@@ -507,7 +508,7 @@
 								},
 								{
 									"key": "anyo2",
-									"value": "2086",
+									"value": "2018",
 									"description": "",
 									"type": "text"
 								},
@@ -519,13 +520,13 @@
 								},
 								{
 									"key": "dia2",
-									"value": "3",
+									"value": "1",
 									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "hora2",
-									"value": "22",
+									"value": "12",
 									"description": "",
 									"type": "text"
 								},
@@ -537,7 +538,7 @@
 								},
 								{
 									"key": "rut",
-									"value": "11111111-1",
+									"value": "22222222-2",
 									"type": "text"
 								},
 								{
@@ -548,7 +549,7 @@
 								},
 								{
 									"key": "mesa",
-									"value": "2",
+									"value": "",
 									"description": "",
 									"type": "text"
 								}
