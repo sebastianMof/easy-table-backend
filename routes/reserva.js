@@ -7,7 +7,7 @@ let verificarFechaMesa = require('./routes_reserva/verificarFechaMesa');
 let crearReserva = require('./routes_reserva/crearReserva');
 let buscarMesa = require('./routes_reserva/buscarMesa');
 
-//POST-CREATE reserva sin validaciones
+//POST-CREATE reserva 
 router.post('/',async(req, res, next)=>{
     
     const anyo1 = req.body['anyo1'];
@@ -26,56 +26,72 @@ router.post('/',async(req, res, next)=>{
     const mesa = req.body['mesa'];
     const capacidad = req.body['capacidad'];
  
-    let fecha1 = new Date(parseInt(anyo1), parseInt(mes1), parseInt(dia1), parseInt(hora1), parseInt(min1));
-    let fecha2 = new Date(parseInt(anyo2), parseInt(mes2), parseInt(dia2), parseInt(hora2), parseInt(min2));
+    let fech1 = moment().set({'y': anyo1, 'M': mes1, 'D': dia1, 'h':hora1, 'm':min1});
+    let fech2 = moment().set({'y': anyo2, 'M': mes2, 'D': dia2, 'h':hora2, 'm':min2});
 
-    var temp = false;
-    temp = await verificarFechaMesa(fecha1, fecha2, mesa);
+    var diff = fech2.diff(fech1,'hours');//habrá máximo de 6 horas de reserva
 
-    if(temp){ //True si no hay reservas en mesa entre fechas
-        crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
-            .then( reserva =>{
-                res.send(reserva);
-                console.log(reserva);
-            })
-            .catch( err =>{
-                console.log('err : ' + err);
-            })
-    }else{
-        try {
-            let mesas = await buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
-            if(mesas !== false){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
-                temp = false;
-                for (var i = 0; i < mesas.length; i++) {
-                    temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
-                    if(temp === true){//se encuentra la primera mesa disponible en el horario
-                        crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
-                            .then( reserva =>{
-                                res.send(reserva);
-                            })
-                            .catch( err =>{
-                                console.log('err : ' + err);
-                            })
-                        break;
+    let fecha1 = fech1.toDate();
+    let fecha2 = fech2.toDate();
+
+    if(fecha1 && fecha2 && rut && (mesa || capacidad) &&(diff <=6)){
+
+
+        var temp = false;
+        temp = await verificarFechaMesa(fecha1, fecha2, mesa);
+
+        if(temp){ //True si no hay reservas en mesa entre fechas
+            crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
+                .then( reserva =>{
+                    res.send(reserva);
+                    console.log(reserva);
+                })
+                .catch( err =>{
+                    console.log('err : ' + err);
+                })
+        }else{
+            try {
+                let mesas = await buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
+                if(mesas !== false){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
+                    temp = false;
+                    for (var i = 0; i < mesas.length; i++) {
+                        temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
+                        if(temp === true){//se encuentra la primera mesa disponible en el horario
+                            crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
+                                .then( reserva =>{
+                                    res.send(reserva);
+                                })
+                                .catch( err =>{
+                                    console.log('err : ' + err);
+                                })
+                            break;
+                        }
+                    } 
+                    if(temp === false) {
+                        res.status(400).json({
+                            status: 0,
+                            statusCode: 'reserva/error',
+                            description: "No se creo la reserva"
+                        });
                     }
-                } 
-                if(temp === false) {
-                    res.status(400).json({
-                        status: 0,
-                        statusCode: 'reserva/error',
-                        description: "No se creo la reserva"
-                    });
-                }
-            }   
-        } catch(e) {
-            console.log(e)
+                }   
+            } catch(e) {
+                console.log(e)
+            }
+                       
         }
-                   
+    
+    }else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'reserva/error-body',
+            description: 'Error en el body o reserva mayor a 6 horas'
+        });
     }
 });
 
 //GET-READ consulta todas las reservas
-router.get('/', async(req, res, next) => {
+router.get('/', async(req, res, next) => { //el display de cada fecha hay que pasarla a momentjs
     models.reserva
         .findAll()
         .then(reserva => {
@@ -102,7 +118,7 @@ router.get('/', async(req, res, next) => {
 });
 
 //GET-READ consulta todas las reservas activas
-router.get('/activas', async(req, res, next) => {
+router.get('/activas', async(req, res, next) => { //el display de cada fecha hay que pasarla a momentjs
         models.reserva.findAll({
             where: {
                 estado: true
