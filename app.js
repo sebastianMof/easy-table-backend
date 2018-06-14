@@ -8,11 +8,8 @@ const indexRouter = require('./routes/index');
 const mesaRouter = require('./routes/mesa');
 const reservaRouter = require('./routes/reserva');
 const usuarioRouter = require('./routes/usuario');
-const reservarRouter = require('./routes/reservar');
-const test = require('./routes/routes_reserva/verificarFechaMesa');
+
 //-----------------------------
-
-
 const app = express();
 
 // view engine setup
@@ -30,11 +27,6 @@ app.use('/mesa', mesaRouter);
 app.use('/reserva', reservaRouter);
 app.use('/usuario', usuarioRouter);
 //----------
-app.use('/reservar', reservarRouter);
-app.use('/reservar', reservarRouter);
-app.use('/verificarFechaMesa',test);
-//-------
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

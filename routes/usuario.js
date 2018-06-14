@@ -23,14 +23,14 @@ router.post('/', async (req, res, next) => {
             if (usuario) {
                 res.json({
                     status: 1,
-                    statusCode: 'usuario/created',
+                    statusCode: 'usuario/creado',
                     data: usuario.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
                     statusCode: 'usuario/error',
-                    description: "Couldn't create the usuario"
+                    description: "No se pudo crear el usuario"
                 });
             }
         }).catch(error => {
@@ -43,8 +43,8 @@ router.post('/', async (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'usuario/wrong-body',
-            description: 'The body is wrong! :('
+            statusCode: 'usuario/error-body',
+            description: 'Error en el body'
         });
     }
 });
@@ -55,14 +55,14 @@ router.get('/', async(req, res, next) => {
         if (users) {
             res.json({
                 status: 1,
-                statusCode: 'users/listing',
+                statusCode: 'usuario/listado',
                 data: users
                 });
         } else {
             res.status(400).json({
                 status: 0,
-                statusCode: 'users/not-found',
-                description: 'There\'s no user information!'
+                statusCode: 'usuario/no-encontrado',
+                description: 'No hay información de usuario'
             });
         }
     }).catch(error => {
@@ -75,8 +75,9 @@ router.get('/', async(req, res, next) => {
 });
 
 //GET-READ consulta usuario por rut
-router.get('/rut/:rut', async(req, res, next) => {
-    const rut = req.params.rut;
+router.get('/consulta/', async(req, res, next) => {
+    const rut = req.query.rut;
+
     if (rut) {
         models.usuario.findOne({
             where: {
@@ -86,14 +87,14 @@ router.get('/rut/:rut', async(req, res, next) => {
             if (usuario) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/found',
+                    statusCode: 'usuario/encontrado',
                     data: usuario.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the rut'
+                    statusCode: 'usuario/no-encontrado',
+                    description: 'No se encontró usuario con rut'
                 });
             }
         }).catch(error => {
@@ -106,15 +107,15 @@ router.get('/rut/:rut', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-rut',
-            description: 'Check the rut!'
+            statusCode: 'usuario/error-rut',
+            description: 'Error al ingresar rut'
         });
     }
 });
 
 //GET-READ consulta tipo de usuario por rut
-router.get('/tipo/:rut', async(req, res, next) => {
-    const rut = req.params.rut;
+router.get('/tipo/', async(req, res, next) => {
+    const rut = req.query.rut;
     if (rut) {
         models.usuario.findOne({
             where: {
@@ -124,14 +125,14 @@ router.get('/tipo/:rut', async(req, res, next) => {
             if (usuario) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/found',
+                    statusCode: 'usuario/encontrado',
                     data: usuario.tipo_usuario
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the rut'
+                    statusCode: 'usuario/no-encontrado',
+                    description: 'No se encontró usuario con rut'
                 });
             }
         }).catch(error => {
@@ -144,8 +145,8 @@ router.get('/tipo/:rut', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-rut',
-            description: 'Check the rut!'
+            statusCode: 'user/error-rut',
+            description: 'Error al ingresar el rut'
         });
     }
 });
@@ -164,14 +165,14 @@ router.get('/login/', async(req, res, next) => {
             if (usuario) {
                 res.json({
                     status: 1,
-                    statusCode: 'login/found',
+                    statusCode: 'login/encontrado',
                     data: usuario.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'login/not-found',
-                    description: 'Check rut or pass'
+                    statusCode: 'login/no-encontrado',
+                    description: 'Revisar rut y contraseña'
                 });
             }
         }).catch(error => {
@@ -184,8 +185,8 @@ router.get('/login/', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-rut',
-            description: 'Check the rut!'
+            statusCode: 'usuario/error-credenciales',
+            description: 'Revisar rut y contraseña'
         });
     }
 });
@@ -225,8 +226,8 @@ router.delete('/delete/', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'keys/wrong-keys',
-            description: 'Check the keys!'
+            statusCode: 'credenciales/error',
+            description: 'Error al ingresar rut y/o contraseña'
         });
     }
 });

@@ -1,7 +1,6 @@
 const models = require('../../models')
 
 function crearReserva(fecha1, fecha2, mesa, rut){
-    console.log('crear reserva');
 	var a = models.reserva.create({
             fecha_inicio_reserva: fecha1,
             fecha_fin_reserva: fecha2,
@@ -13,14 +12,14 @@ function crearReserva(fecha1, fecha2, mesa, rut){
                 if(reserva){
                     resolve({
                         status: 1,
-                        statusCode: 'reserva/created',
+                        statusCode: 'reserva/creada',
                         data: reserva.toJSON()
                     });
                 }
                 reject({
                     status: 0,
                     statusCode: 'reserva/error',
-                    description: "Couldn't create the reserva"  
+                    description: "No se pudo crear la reserva"  
                 })
             });
         }).catch(error => {

@@ -1,9 +1,8 @@
 const models = require('../../models');
-let verificarFechaMesa = require('./verificarFechaMesa');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-module.exports =  async(fecha1, fecha2, capacidad)=>{//retorna mesas con capacidad pedida ordenadas
+module.exports =  async(fecha1, fecha2, capacidad)=>{//retorna mesas con capacidad pedida ordenadas, es decir, el orden de las más adecuadas
     let mesa = models.mesa.findAll({
     where: {
         capacidad:{

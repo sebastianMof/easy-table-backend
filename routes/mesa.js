@@ -28,14 +28,14 @@ router.post('/', async (req, res, next) => {
                     if (mesa) {
                         res.json({
                             status: 1,
-                            statusCode: 'mesa/created',
+                            statusCode: 'mesa/creada',
                             data: mesa.toJSON()
                         });
                     } else {
                         res.status(400).json({
                             status: 0,
                             statusCode: 'mesa/error',
-                            description: "Couldn't create the mesa"
+                            description: "No se creó la mesa"
                         });
                     }
                 }).catch(error => {
@@ -48,8 +48,8 @@ router.post('/', async (req, res, next) => {
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the keys or not Admin'
+                    statusCode: 'usuario/no-encontrado',
+                    description: 'No se encontró usuario con credenciales o no es un administrador'
                 });
             }
 
@@ -64,13 +64,13 @@ router.post('/', async (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'mesa/wrong-body',
-            description: 'The body is wrong! :('
+            statusCode: 'mesa/error-body',
+            description: 'Error en el body'
         });
     }
 });
 
-//GET-READ consulta todas las mesas
+//GET-READ consulta todas las mesas existentes en el local
 router.get('/', async(req, res, next) => {
     models.mesa
         .findAll()
@@ -78,14 +78,14 @@ router.get('/', async(req, res, next) => {
             if (mesas) {
                 res.json({
                     status: 1,
-                    statusCode: 'mesa/listing',
+                    statusCode: 'mesa/listado',
                     data: mesas
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'mesa/not-found',
-                    description: 'There\'s no user information!'
+                    statusCode: 'mesa/no-encontrada',
+                    description: 'No hay información de mesas'
                 });
             }
         }).catch(error => {
@@ -97,8 +97,8 @@ router.get('/', async(req, res, next) => {
     });
 });
 
-//GET-READ busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia
-router.get('/capacidad/', async(req, res, next) => {  
+//GET-READ busca la mesas con capacidad igual o mayor a la pedida y se obtiene la con menos diferencia, es decir, la mesa más adecuada según la capacidad.
+router.get('/adecuada/', async(req, res, next) => {  
     const capacidad = req.query.capacidad;
     if (capacidad) {
         models.mesa.findOne({
@@ -114,14 +114,14 @@ router.get('/capacidad/', async(req, res, next) => {
             if (mesas) {
                 res.json({
                     status: 1,
-                    statusCode: 'mesa/found',
+                    statusCode: 'mesa/encontrada',
                     data: mesas.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'capacidad-mesa/not-found',
-                    description: 'The capacidad-mesa not found '
+                    statusCode: 'mesa/no-encontrada',
+                    description: 'No se encontró mesa con esa capacidad'
                 });
             }
         }).catch(error => {
@@ -134,14 +134,14 @@ router.get('/capacidad/', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'mesa/wrong-capacidad',
-            description: 'Check the capacidad!'
+            statusCode: 'mesa/error-capacidad',
+            description: 'Error al ingresar capacidad'
         });
     }
 });
 
-//GET-READ mesa con numero de mesa(para saber capacidad)
-router.get('/numero/', async (req, res, next) => {
+//GET-READ retorna la mesa con el numero de mesa pedido
+router.get('/capacidad/', async (req, res, next) => {
     const numero = req.query.numero;
     if (numero) {
         models.mesa.findOne({
@@ -152,14 +152,14 @@ router.get('/numero/', async (req, res, next) => {
             if (mesa) {
                 res.json({
                     status: 1,
-                    statusCode: 'mesa/found',
+                    statusCode: 'mesa/encontrada',
                     data: mesa.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'mesa/not-found',
-                    description: "Couldn't find the mesa"
+                    statusCode: 'mesa/no-encontrada',
+                    description: "No se encontró la mesa"
                 });
             }
         }).catch(error => {
@@ -172,13 +172,13 @@ router.get('/numero/', async (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'mesa/wrong-parameter',
-            description: 'The parameters are wrong! :('
+            statusCode: 'mesa/error-parametros',
+            description: 'Los parámetros son érroneos'
         });
     }
 });
 
-//DELETE-DELETE por numero de mesa
+//DELETE-DELETE por numero de mesa(por administrador)
 router.delete('/delete/', async(req, res, next) => {
     const numero = req.body['numero'];
     const rut = req.body['rut'];
@@ -201,13 +201,13 @@ router.delete('/delete/', async(req, res, next) => {
                     if (mesa) {
                         res.json({
                             status: 1,
-                            statusCode: 'mesa/deleted',
+                            statusCode: 'mesa/eliminada',
                         });
                     } else {
                         res.status(400).json({
                             status: 0,
                             statusCode: 'mesa/error',
-                            description: "Couldn't delete the mesa"
+                            description: "No se pudo eliminar la mesa"
                         });
                     }
                 }).catch(error => {
@@ -220,8 +220,8 @@ router.delete('/delete/', async(req, res, next) => {
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the keys or not Admin'
+                    statusCode: 'usuario/no-encontrado',
+                    description: 'No se encontró usuario con credenciales o no es un administrador'
                 });
             }
 
@@ -236,8 +236,8 @@ router.delete('/delete/', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'mesa/wrong-body',
-            description: 'The body is wrong! :('
+            statusCode: 'mesa/error-body',
+            description: 'Error en el body'
         });
     }
 });

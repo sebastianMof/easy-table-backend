@@ -2,8 +2,7 @@ const models = require('../../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-module.exports =  async(fecha1, fecha2, mesa)=>{
-  console.log('verificar')
+module.exports =  async(fecha1, fecha2, mesa)=>{//Verifica si existe reserva activa entre las fechas 1 y 2 para la mesa(mesa=numero de mesa, no objeto)
     let reserva = models.reserva.findAll({
       where: {
         [Op.or]:[
@@ -41,9 +40,9 @@ module.exports =  async(fecha1, fecha2, mesa)=>{
     }).then(res=>{
       return new Promise((resolve,reject)=>{
         if(res.length!=0){
-          return resolve(false);
+          return resolve(false);//retorna falso si existe alguna reserva en el periodo
         }else{
-          return resolve(true);
+          return resolve(true);//retorna true si no existe reserva para la mesa en el periodo
         }
         return reject('No se encontraron datos');
       })

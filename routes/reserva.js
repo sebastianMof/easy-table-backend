@@ -1,49 +1,76 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const moment = require('moment');
+//----------
+let verificarFechaMesa = require('./routes_reserva/verificarFechaMesa');
+let crearReserva = require('./routes_reserva/crearReserva');
+let buscarMesa = require('./routes_reserva/buscarMesa');
 
 //POST-CREATE reserva sin validaciones
-router.post('/', async (req, res, next) => {
-    const fecha_inicio_reserva = req.body['fecha_inicio_reserva'];
-    const fecha_fin_reserva = req.body['fecha_fin_reserva'];
-    const estado = req.body['estado'];
-    const mesaNumero = req.body['mesaNumero'];
-    const usuarioRut = req.body['usuarioRut'];
+router.post('/',async(req, res, next)=>{
+    
+    const anyo1 = req.body['anyo1'];
+    const mes1 = req.body['mes1'];
+    const dia1 = req.body['dia1'];
+    const hora1 = req.body['hora1'];
+    const min1 = req.body['min1'];
 
-    if (fecha_inicio_reserva && fecha_fin_reserva && estado && mesaNumero && usuarioRut) {
-        models.reserva.create({
-            fecha_inicio_reserva: fecha_inicio_reserva,
-            fecha_fin_reserva: fecha_fin_reserva,
-            estado: estado,
-            mesaNumero: mesaNumero,
-            usuarioRut: usuarioRut
-        }).then(reserva => {
-            if (reserva) {
-                res.json({
-                    status: 1,
-                    statusCode: 'reserva/created',
-                    data: reserva.toJSON()
-                });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'reserva/error',
-                    description: "Couldn't create the reserva"
-                });
-            }
-        }).catch(error => {
-            res.status(400).json({
-                status: 0,
-                statusCode: 'database/error',
-                description: error.toString()
-            });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'reserva/wrong-body',
-            description: 'The body is wrong! :('
-        });
+    const anyo2 = req.body['anyo2'];
+    const mes2 = req.body['mes2'];
+    const dia2 = req.body['dia2'];
+    const hora2 = req.body['hora2'];
+    const min2 = req.body['min2'];
+
+    const rut = req.body['rut'];
+    const mesa = req.body['mesa'];
+    const capacidad = req.body['capacidad'];
+ 
+    let fecha1 = new Date(parseInt(anyo1), parseInt(mes1), parseInt(dia1), parseInt(hora1), parseInt(min1));
+    let fecha2 = new Date(parseInt(anyo2), parseInt(mes2), parseInt(dia2), parseInt(hora2), parseInt(min2));
+
+    var temp = false;
+    temp = await verificarFechaMesa(fecha1, fecha2, mesa);
+
+    if(temp){ //True si no hay reservas en mesa entre fechas
+        crearReserva(fecha1,fecha2,mesa,rut) //Se crea la reserva
+            .then( reserva =>{
+                res.send(reserva);
+                console.log(reserva);
+            })
+            .catch( err =>{
+                console.log('err : ' + err);
+            })
+    }else{
+        try {
+            let mesas = await buscarMesa(fecha1,fecha2,capacidad)//se buscan una o mas mesas con la capacidad dada y ordenadas
+            if(mesas !== false){//se verifican todas las mesas disponibles en orden hasta encontrar la primera que sirva
+                temp = false;
+                for (var i = 0; i < mesas.length; i++) {
+                    temp = await verificarFechaMesa(fecha1, fecha2, mesas[i].numero);
+                    if(temp === true){//se encuentra la primera mesa disponible en el horario
+                        crearReserva(fecha1,fecha2,mesas[i].numero,rut) //Se crea la reserva
+                            .then( reserva =>{
+                                res.send(reserva);
+                            })
+                            .catch( err =>{
+                                console.log('err : ' + err);
+                            })
+                        break;
+                    }
+                } 
+                if(temp === false) {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'reserva/error',
+                        description: "No se creo la reserva"
+                    });
+                }
+            }   
+        } catch(e) {
+            console.log(e)
+        }
+                   
     }
 });
 
@@ -61,8 +88,8 @@ router.get('/', async(req, res, next) => {
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'reserva/not-found',
-                    description: 'There\'s no user information!'
+                    statusCode: 'reserva/no-encontradas',
+                    description: 'No hay informacion de reservas'
                 });
             }
         }).catch(error => {
@@ -84,14 +111,14 @@ router.get('/activas', async(req, res, next) => {
             if (reserva) {
                 res.json({
                     status: 1,
-                    statusCode: 'reserva/listing',
+                    statusCode: 'reserva/listado',
                     data: reserva
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'reserva/not-found',
-                    description: 'There\'s no user information!'
+                    statusCode: 'reserva/no-encontrada',
+                    description: 'No hay información de reservas'
                 });
             }
         }).catch(error => {
@@ -103,7 +130,7 @@ router.get('/activas', async(req, res, next) => {
         });
 });
 
-//PUT-UPDATE libera la mesa, es decir estado de la reserva igual a cero(false)
+//PUT-UPDATE libera la mesa, es decir estado de la reserva igual a cero(false)-(si es administrador)
 router.patch('/libera/', async (req, res, next) => {
     
     const rut = req.body['rut'];
@@ -146,7 +173,7 @@ router.patch('/libera/', async (req, res, next) => {
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'usuario/not-found',
+                    statusCode: 'usuario/no-encontrado',
                     description: 'No se encontro usuario con datos'
                 });
             }
@@ -160,13 +187,13 @@ router.patch('/libera/', async (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'usuario/wrong-keys-or-id',
-            description: 'Check the keys and id!'
+            statusCode: 'usuario/error-credenciales',
+            description: 'Error al ingresar rut, contraseña o id de mesa'
         });
     }
 });
 
-//DELETE-DELETE por id de reserva
+//DELETE-DELETE Borra reserva por id(si es administrador)
 router.delete('/delete/', async(req, res, next) => {
     
     const rut = req.body['rut'];
@@ -203,7 +230,7 @@ router.delete('/delete/', async(req, res, next) => {
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'usuario/not-found',
+                    statusCode: 'usuario/no-encontrado',
                     description: 'No se encontro usuario con datos'
                 });
             }
@@ -217,8 +244,8 @@ router.delete('/delete/', async(req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'usuario/wrong-keys-or-id',
-            description: 'Check the keys and id!'
+            statusCode: 'usuario/error-credenciales',
+            description: 'Error al ingresar rut, contraseña o id de mesa'
         });
     }
 });
