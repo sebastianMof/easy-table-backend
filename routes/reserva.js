@@ -21,8 +21,8 @@ router.post('/',async(req, res, next)=>{
     var hour1 = hora_inicio.split(':');
     var hour2 = hora_fin.split(':');
 
-    fecha1 = new Date(parseInt(date1[0]), parseInt(date1[1])-1, parseInt(date1[2]), parseInt(hour1[0]), parseInt(hour1[1]));
-    fecha2 = new Date(parseInt(date2[0]), parseInt(date2[1])-1, parseInt(date2[2]), parseInt(hour2[0]), parseInt(hour2[1]));
+    fecha1 = new Date(parseInt(date1[0]), parseInt(date1[1])-1, parseInt(date1[2]), parseInt(hour1[0])-4, parseInt(hour1[1]));
+    fecha2 = new Date(parseInt(date2[0]), parseInt(date2[1])-1, parseInt(date2[2]), parseInt(hour2[0])-4, parseInt(hour2[1]));
 
     const rut = req.body['rut'];
     const mesa = req.body['mesa'];
