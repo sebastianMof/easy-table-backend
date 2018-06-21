@@ -10,32 +10,27 @@ let buscarMesa = require('./routes_reserva/buscarMesa');
 //POST-CREATE reserva 
 router.post('/',async(req, res, next)=>{
     
-    const anyo1 = req.body['anyo1'];
-    const mes1 = req.body['mes1'];
-    const dia1 = req.body['dia1'];
-    const hora1 = req.body['hora1'];
-    const min1 = req.body['min1'];
 
-    const anyo2 = req.body['anyo2'];
-    const mes2 = req.body['mes2'];
-    const dia2 = req.body['dia2'];
-    const hora2 = req.body['hora2'];
-    const min2 = req.body['min2'];
+    const fecha_inicio = req.body['fecha_inicio_reserva'];
+    const fecha_fin = req.body['fecha_fin_reserva'];
+    const hora_inicio = req.body['hora_inicio_reserva'];
+    const hora_fin = req.body['hora_fin_reserva'];
+
+    var date1 = fecha_inicio.split('-');
+    var date2 = fecha_fin.split('-');
+    var hour1 = hora_inicio.split(':');
+    var hour2 = hora_fin.split(':');
+
+    fecha1 = new Date(parseInt(date1[0]), parseInt(date1[1])-1, parseInt(date1[2]), parseInt(hour1[0]), parseInt(hour1[1]));
+    fecha2 = new Date(parseInt(date2[0]), parseInt(date2[1])-1, parseInt(date2[2]), parseInt(hour2[0]), parseInt(hour2[1]));
 
     const rut = req.body['rut'];
     const mesa = req.body['mesa'];
     const capacidad = req.body['capacidad'];
- 
-    let fech1 = moment().set({'y': anyo1, 'M': mes1, 'D': dia1, 'h':hora1, 'm':min1});
-    let fech2 = moment().set({'y': anyo2, 'M': mes2, 'D': dia2, 'h':hora2, 'm':min2});
 
-    var diff = fech2.diff(fech1,'hours');//habrá máximo de 6 horas de reserva
-
-    let fecha1 = fech1.toDate();
-    let fecha2 = fech2.toDate();
+    var diff = moment(fecha1).diff(moment(fecha2),'hours');//habrá máximo de 6 horas de reserva
 
     if(fecha1 && fecha2 && rut && (mesa || capacidad) &&(diff <=6)){
-
 
         var temp = false;
         if(mesa){
