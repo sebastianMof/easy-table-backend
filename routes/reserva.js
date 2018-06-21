@@ -28,9 +28,9 @@ router.post('/',async(req, res, next)=>{
     const mesa = req.body['mesa'];
     const capacidad = req.body['capacidad'];
 
-    var diff = moment(fecha1).diff(moment(fecha2),'hours');//habrá máximo de 6 horas de reserva
+    var diff = moment(fecha2,"YYYY/MM/DD HH:mm").diff(moment(fecha1,"YYYY/MM/DD HH:mm"),'hours');//habrá máximo de 6 horas de reserva
 
-    if(fecha1 && fecha2 && rut && (mesa || capacidad) &&(diff <=6)){
+    if(fecha1 && fecha2 && rut && (mesa || capacidad) &&(diff <=6 && diff >= 0)){
 
         var temp = false;
         if(mesa){
